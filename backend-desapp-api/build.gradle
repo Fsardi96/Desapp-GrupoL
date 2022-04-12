@@ -1,8 +1,10 @@
 plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "org.sonarqube" version "3.3"
 	id 'java'
 	id 'war'
+
 }
 
 group = 'ar.edu.unq.desapp.grupoL'
@@ -21,4 +23,13 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "Fsardi96_Desapp-GrupoL"
+    property "sonar.organization", "fsardi96"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
