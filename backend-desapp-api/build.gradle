@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'war'
+	id "org.sonarqube" version "3.3"
 }
 
 group = 'ar.edu.unq.desapp.grupoL'
@@ -21,10 +22,6 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-plugins {
-	id "org.sonarqube" version "3.3"
 }
 
 sonarqube {
