@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-import javax.persistence.Id;
 
 public class User {
 
