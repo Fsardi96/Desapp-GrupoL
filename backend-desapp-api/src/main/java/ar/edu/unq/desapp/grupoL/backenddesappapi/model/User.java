@@ -1,6 +1,10 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import javax.persistence.Id;
+
 public class User {
+
+    private Long id;
     private String name;
     private String surname;
     private String email;
@@ -9,9 +13,12 @@ public class User {
     private String cvu;
     private String wallet;
 
+
     public User() { }
 
-    public User(String name, String surname, String email, String address, String password, String cvu, String wallet) {
+
+    public User(Long id, String name, String surname, String email, String address, String password, String cvu, String wallet) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
