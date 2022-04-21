@@ -32,14 +32,14 @@ public class UserRestService {
         return this.userService.createUser(usuario);
     }
 
-    @RequestMapping(value = "/api/version", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/api/version", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> getVersion() {
         String version = "0.2.2";
         Map<String, String> resultado = new HashMap<String, String>();
         resultado.put("version", version);
         return ResponseEntity.ok().body(resultado);
-    }
+    }*/
 
 }
 
