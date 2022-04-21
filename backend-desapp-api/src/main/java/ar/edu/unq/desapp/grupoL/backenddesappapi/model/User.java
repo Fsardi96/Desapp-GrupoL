@@ -1,6 +1,12 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
     private Long id;
@@ -81,5 +87,14 @@ public class User {
 
     public void setWallet(String wallet) {
         this.wallet = wallet;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    public Long getId() {
+        return id;
     }
 }

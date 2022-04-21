@@ -13,6 +13,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+
+    public UserService(){}
+
+
     @Transactional
     public ArrayList<User> getUsers(){
         return (ArrayList<User>) this.userRepository.findAll();
