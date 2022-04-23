@@ -11,8 +11,6 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User,Long>{
 
-     //ArrayList<User> getUsers();
 
-    //User createUser(User usuario);
 
 }

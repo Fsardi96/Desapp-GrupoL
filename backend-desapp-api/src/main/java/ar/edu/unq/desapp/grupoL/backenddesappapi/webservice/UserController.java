@@ -11,25 +11,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 //@RequestMapping("/user")
 
 @RestController
 @Transactional
-public class UserRestService {
+@RequestMapping("/api") //method = RequestMethod.GET)
+public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/users")
+
+
+    @GetMapping("/users")
     public ResponseEntity<?> getUsers(){
         ArrayList<User> userList = userService.getUsers();
         return ResponseEntity.ok().body(userList);
     }
 
-    @PostMapping()
-    public User createUser(@RequestBody User usuario){
-        return this.userService.createUser(usuario);
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> getUserByID(@PathVariable Long id){
+        Optional<User> userFound = userService.findUser(id);
+        return ResponseEntity.ok().body(userFound);
+    }
+
+    @PostMapping("addUser")
+    public User createUser(@RequestBody User user){
+        return this.userService.createUser(user);
     }
 
     /*@RequestMapping(value = "/api/version", method = RequestMethod.GET)
