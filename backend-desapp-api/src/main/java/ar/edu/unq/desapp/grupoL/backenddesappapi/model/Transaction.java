@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
 public class Transaction {
     private String dateAndTime;
-    private Cryptocurrency crypto;
+    private CryptoCurrency crypto;
     private Float amountOfCrypto;
     private Float priceInARS;
     private User user;
@@ -10,7 +10,7 @@ public class Transaction {
 
     public Transaction() { }
 
-    public Transaction(String dateAndTime, Cryptocurrency crypto, Float amountOfCrypto, Float priceInARS, User user, String transactionType) {
+    public Transaction(String dateAndTime, CryptoCurrency crypto, Float amountOfCrypto, Float priceInARS, User user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.amountOfCrypto = amountOfCrypto;
@@ -27,11 +27,11 @@ public class Transaction {
         this.dateAndTime = dateAndTime;
     }
 
-    public Cryptocurrency getCrypto() {
+    public CryptoCurrency getCrypto() {
         return crypto;
     }
 
-    public void setCrypto(Cryptocurrency crypto) {
+    public void setCrypto(CryptoCurrency crypto) {
         this.crypto = crypto;
     }
 
