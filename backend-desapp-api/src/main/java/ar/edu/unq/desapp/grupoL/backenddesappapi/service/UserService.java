@@ -33,6 +33,11 @@ public class UserService {
         return this.userRepository.save(usuario);
     }
 
+    @Transactional
+    public void deleteUser(Long id){
+         this.userRepository.deleteById(id);
+    }
+
 
 
 }

@@ -1,24 +1,24 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-public class Cryptocurrency {
-    private String name;
+public class CryptoCurrency {
+    private String symbol;
     private Float price;
     private String lastUpdateDateAndTime;
 
-    public Cryptocurrency() { }
+    public CryptoCurrency() { }
 
-    public Cryptocurrency(String name, Float price, String lastUpdateDateAndTime) {
-        this.name = name;
+    public CryptoCurrency(String symbol, Float price, String lastUpdateDateAndTime) {
+        this.symbol = symbol;
         this.price = price;
         this.lastUpdateDateAndTime = lastUpdateDateAndTime;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public Float getPrice() {
