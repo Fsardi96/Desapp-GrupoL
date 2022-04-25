@@ -1,5 +1,8 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 public class CryptoCurrency {
     private String symbol;
     private Float price;

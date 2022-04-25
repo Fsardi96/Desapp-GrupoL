@@ -1,7 +1,8 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyValue;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyEnum;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -22,11 +23,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     private RestTemplate restTemplate = new RestTemplate() ;
-    private CryptoCurrencyValue crypoCurrencyValue = new CryptoCurrencyValue();
     //private CryptoCurrency cryptoCurrency = new CryptoCurrency();
-
 
     @GetMapping("/users")
     public ArrayList<User> getUsers(){
@@ -41,10 +39,29 @@ public class UserController {
 
     @GetMapping("/getCrypoValue/{symbol}")
     public ResponseEntity<?> getCryptoCurrencyValue(@PathVariable String symbol){
-
         CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + symbol, CryptoCurrency.class);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        if (entity != null) {
+            entity.setLastUpdateDateAndTime(formatter.format(date));
+        }
         return ResponseEntity.ok().body(entity);
-               // new CryptoCurrency(entity.get,entity.getPrice(),"HoraActual");
+    }
+
+    @GetMapping("/getCrypoValue/all")
+    public ResponseEntity<?> getAllCryptoCurrencyPrices() {
+        CryptoCurrencyList list = new CryptoCurrencyList();
+        for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
+            CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            if (entity != null) {
+                entity.setLastUpdateDateAndTime(formatter.format(date));
+            }
+            list.addCrypto(entity);
+
+        }
+        return ResponseEntity.ok().body(list);
     }
 
     @PostMapping("/addUser")
@@ -52,18 +69,11 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
-
-
-
-
-
    /* @DeleteMapping("/users/{id})
     public void deleteUser(@PathVariable Long id){
          this.userService.deleteUser(id);
          return ResponseEntity.ok().build();
     }*/
-
-
 
     /*@RequestMapping(value = "/api/version", method = RequestMethod.GET)
     @ResponseBody
