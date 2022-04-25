@@ -35,7 +35,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id){
-         this.userRepository.deleteById(id);
+        this.userRepository.deleteById(id);
     }
 
 

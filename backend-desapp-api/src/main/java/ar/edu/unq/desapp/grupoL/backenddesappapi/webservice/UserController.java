@@ -69,11 +69,10 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
-   /* @DeleteMapping("/users/{id})
+    @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable Long id){
-         this.userService.deleteUser(id);
-         return ResponseEntity.ok().build();
-    }*/
+        this.userService.deleteUser(id);
+    }
 
     /*@RequestMapping(value = "/api/version", method = RequestMethod.GET)
     @ResponseBody
