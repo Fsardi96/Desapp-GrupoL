@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyEnum;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user) throws UserError{
         return this.userService.createUser(user);
     }
 
