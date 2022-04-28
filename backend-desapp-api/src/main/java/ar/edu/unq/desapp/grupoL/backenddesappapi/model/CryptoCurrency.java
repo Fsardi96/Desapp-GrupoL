@@ -1,9 +1,12 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
+@Entity
 public class CryptoCurrency {
+    @Id
     private String symbol;
     private Float price;
     private String lastUpdateDateAndTime;

@@ -1,14 +1,14 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.*;
+import java.util.ArrayList;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
     private String surname;
@@ -17,13 +17,13 @@ public class User {
     private String password;
     private String cvu;
     private String wallet;
-
+    private String algo;
+    @OneToMany
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public User() { }
 
-
-    public User(Long id, String name, String surname, String email, String address, String password, String cvu, String wallet) {
-        this.id = id;
+    public User(String name, String surname, String email, String address, String password, String cvu, String wallet, String algo) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -31,7 +31,13 @@ public class User {
         this.password = password;
         this.cvu = cvu;
         this.wallet = wallet;
+        this.transactions = new ArrayList<>();
     }
+
+   /* public Long incrementarID(){
+        this.id ++;
+        return this.id;
+    }*/
 
     public String getName() {
         return name;
@@ -89,6 +95,13 @@ public class User {
         this.wallet = wallet;
     }
 
+    /*public ArrayList<Transaction> getTransactions() {
+        return this.transactions;
+    }*/
+    public void addTransaction (Transaction transaction){
+        this.transactions.add(transaction);
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -97,5 +110,6 @@ public class User {
     public Long getId() {
         return id;
     }
+
 }
 
