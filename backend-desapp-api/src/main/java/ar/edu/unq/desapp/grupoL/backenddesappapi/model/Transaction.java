@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Transaction {
     @Id
-    private Long id = Long.valueOf(0);
+    private Long id;
     private String dateAndTime;
 
     //private CryptoCurrency crypto;

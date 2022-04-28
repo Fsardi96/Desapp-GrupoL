@@ -20,8 +20,8 @@ import java.util.*;
 public class UserController {
     @Autowired
     private UserService userService;
-
     private RestTemplate restTemplate = new RestTemplate() ;
+
 
 
     @GetMapping("/users")
@@ -51,10 +51,8 @@ public class UserController {
         CryptoCurrencyList list = new CryptoCurrencyList();
         for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
             CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
             if (entity != null) {
-                entity.setLastUpdateDateAndTime(formatter.format(date));
+                entity.setLastUpdateDateAndTime(userService.getNewDate());
             }
             list.addCrypto(entity);
 
@@ -70,7 +68,7 @@ public class UserController {
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public Transaction createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
         Optional<User> user = this.userService.findUser(userID);       //crear validación si el user existe.
-        Transaction newTransaction = new Transaction(transaction.getDateAndTime(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
+        Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
                                                     transaction.getPriceInARS(), user.get(), transaction.getTransactionType());
         user.get().addTransaction(newTransaction);
         return newTransaction;
