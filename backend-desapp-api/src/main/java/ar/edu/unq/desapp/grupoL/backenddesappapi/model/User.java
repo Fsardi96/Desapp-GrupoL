@@ -17,13 +17,14 @@ public class User {
     private String password;
     private String cvu;
     private String wallet;
-    private String algo;
-    @OneToMany
+    private Float score;
+    private Integer operationsNumber;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //LAZY O EAGER?
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public User() { }
 
-    public User(String name, String surname, String email, String address, String password, String cvu, String wallet, String algo) {
+    public User(String name, String surname, String email, String address, String password, String cvu, String wallet, Float score, Integer operationsNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -31,6 +32,8 @@ public class User {
         this.password = password;
         this.cvu = cvu;
         this.wallet = wallet;
+        this.score = Float.valueOf(0);
+        this.operationsNumber = 0;
         this.transactions = new ArrayList<>();
     }
 
@@ -95,9 +98,12 @@ public class User {
         this.wallet = wallet;
     }
 
-    /*public ArrayList<Transaction> getTransactions() {
+/*
+    public ArrayList<Transaction> getTransactions() {
         return this.transactions;
     }*/
+
+
     public void addTransaction (Transaction transaction){
         this.transactions.add(transaction);
     }

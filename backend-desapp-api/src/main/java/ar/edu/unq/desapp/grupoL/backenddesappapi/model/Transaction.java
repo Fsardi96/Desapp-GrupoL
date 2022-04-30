@@ -1,9 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
+import javax.persistence.*;
 
 @Entity
 public class Transaction {
@@ -15,13 +13,13 @@ public class Transaction {
     private String crypto;
     private Float amountOfCrypto;
     private Float priceInARS;
-    @ManyToOne
-    private User user;
+    @OneToOne//(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private UserDTO user;
     private String transactionType;
 
     public Transaction() { }
 
-    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceInARS, User user, String transactionType) {
+    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceInARS, UserDTO user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.amountOfCrypto = amountOfCrypto;
@@ -66,11 +64,11 @@ public class Transaction {
         this.priceInARS = priceInARS;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

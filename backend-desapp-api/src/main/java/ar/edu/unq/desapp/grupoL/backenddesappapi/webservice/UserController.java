@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +68,11 @@ public class UserController {
 
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public Transaction createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
-        Optional<User> user = this.userService.findUser(userID);       //crear validación si el user existe.
+        User user = this.userService.findUser(userID).get();       //crear validación si el user existe.
+        UserDTO userDTO = new UserDTO(user.getId(),user.getName(),user.getSurname());
         Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
-                                                    transaction.getPriceInARS(), user.get(), transaction.getTransactionType());
-        user.get().addTransaction(newTransaction);
+                                                    transaction.getPriceInARS(),userDTO ,transaction.getTransactionType());
+        user.addTransaction(newTransaction);
         return newTransaction;
     }
 
