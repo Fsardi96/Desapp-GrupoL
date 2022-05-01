@@ -1,33 +1,38 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+@Entity
 public class TransactionDTO {
+ @Id
+ private Long id;
+ private String crypto;
+ private Float amountOfCrypto;
+ private Float priceOfCrypto;
+ private Float priceInARS;
+ private String transactionType;
+ private String userFullName;
 
+ public TransactionDTO(String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName) {
+  this.crypto = crypto;
+  this.amountOfCrypto = amountOfCrypto;
+  this.priceOfCrypto = priceOfCrypto;
+  this.priceInARS = priceInARS;
+  this.transactionType = transactionType;
+  this.userFullName = userFullName;
+ }
 
- @JsonProperty
-    private String crypto;
- @JsonProperty
-    private Float amountOfCrypto;
- @JsonProperty
-    private Float priceOfCryto;
- @JsonProperty
-    private String transactionType;
+ public TransactionDTO() { }
 
+ @Id
+ public Long getId() {
+  return id;
+ }
 
-
-
-public TransactionDTO( @JsonProperty("crypto") String crypto, @JsonProperty("amountOfCrypto") Float amountOfCrypto, @JsonProperty("priceOfCryto")Float priceOfCryto,
-                       @JsonProperty("transactionType")String transactionType){
-
- this.crypto = crypto;
- this.amountOfCrypto = amountOfCrypto;
- this.priceOfCryto = priceOfCryto;
- this.transactionType =  transactionType;
-}
-
+ public void setId(Long id) {
+  this.id = id;
+ }
 
  public String getCrypto() {
   return crypto;
@@ -45,12 +50,20 @@ public TransactionDTO( @JsonProperty("crypto") String crypto, @JsonProperty("amo
   this.amountOfCrypto = amountOfCrypto;
  }
 
- public Float getPriceOfCryto() {
-  return priceOfCryto;
+ public Float getPriceOfCrypto() {
+  return priceOfCrypto;
  }
 
- public void setPriceOfCryto(Float priceOfCryto) {
-  this.priceOfCryto = priceOfCryto;
+ public void setPriceOfCrypto(Float priceOfCrypto) {
+  this.priceOfCrypto = priceOfCrypto;
+ }
+
+ public Float getPriceInARS() {
+  return priceInARS;
+ }
+
+ public void setPriceInARS(Float priceInARS) {
+  this.priceInARS = priceInARS;
  }
 
  public String getTransactionType() {
@@ -59,5 +72,13 @@ public TransactionDTO( @JsonProperty("crypto") String crypto, @JsonProperty("amo
 
  public void setTransactionType(String transactionType) {
   this.transactionType = transactionType;
+ }
+
+ public String getUserFullName() {
+  return userFullName;
+ }
+
+ public void setUserFullName(String userFullName) {
+  this.userFullName = userFullName;
  }
 }
