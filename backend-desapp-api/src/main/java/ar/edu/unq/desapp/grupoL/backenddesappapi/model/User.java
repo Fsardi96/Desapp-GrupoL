@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 @Entity
-@JsonSerialize(using = UserJsonSerializer.class)
+//@JsonSerialize(using = UserJsonSerializer.class)
 public class User {
 
     @Id
@@ -21,10 +21,10 @@ public class User {
     private String password;
     private String cvu;
     private String wallet;
-    private Float score;
+    private String score;
     private Integer operationsNumber;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //LAZY O EAGER?
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //LAZY O EAGER?
+    private ArrayList<Transaction> transactions = new ArrayList<>();*/
 
     public User() { }
 
@@ -36,9 +36,9 @@ public class User {
         this.password = password;
         this.cvu = cvu;
         this.wallet = wallet;
-        this.score = (float) 0;
+        this.score = "Sin operaciones";
         this.operationsNumber = 0;
-        this.transactions = new ArrayList<>();
+        //this.transactions = new ArrayList<>();
     }
 
    /* public Long incrementarID(){
@@ -110,7 +110,7 @@ public class User {
     public Long getId() {
         return id;
     }
-
+/*
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
@@ -122,13 +122,13 @@ public class User {
 
     public void addTransaction (Transaction transaction){
         this.transactions.add(transaction);
-    }
+    }*/
 
-    public Float getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

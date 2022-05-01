@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
@@ -22,7 +23,7 @@ import java.util.*;
 public class UserController {
     @Autowired
     private UserService userService;
-    private RestTemplate restTemplate = new RestTemplate() ;
+    private RestTemplate restTemplate = new RestTemplate();
 
 
 
@@ -37,11 +38,11 @@ public class UserController {
         return ResponseEntity.ok().body(userFound);
     }
 
-    @GetMapping("/userTransactions/{id}")
+   /* @GetMapping("/userTransactions/{id}")
     public ResponseEntity<?> getUserTransactions(@PathVariable Long id){
         User userFound = userService.findUser(id); //crear validación si el user existe.
         return ResponseEntity.ok().body(userFound.getTransactions());
-    }
+    }*/
 
     @GetMapping("/getCrypoValue/{symbol}")
     public ResponseEntity<?> getCryptoCurrencyValue(@PathVariable String symbol){
@@ -61,7 +62,7 @@ public class UserController {
         for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
             CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
             if (entity != null) {
-                entity.setLastUpdateDateAndTime(userService.getNewDate());
+                entity.setLastUpdateDateAndTime(CurrentDateTime.getNewDateString());
             }
             list.addCrypto(entity);
 
@@ -74,17 +75,17 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
-    @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
-    public void createTransaction(@PathVariable Long userID, @RequestBody TransactionDTO transaction) {
+    /*@PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
+    public Transaction createTransaction(@PathVariable Long userID, @RequestBody TransactionDTO transaction) {
         User user = this.userService.findUser(userID);
         //UserDTO userDTO = new UserDTO(user.getId(),user.getName(),user.getSurname());
-        Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCryto(),
+        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCryto(),
                                                     user, transaction.getTransactionType());
 
 
         userService.addTransactionToUser(user,newTransaction);
-       // return newTransaction; //debe devolver un transactionDTO para ocultar los datos enteros del user.
-    }
+        return newTransaction; //debe devolver un transactionDTO para ocultar los datos enteros del user.
+    }*/
 
 
     @DeleteMapping("/deleteUser/{id}")

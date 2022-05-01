@@ -1,15 +1,10 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.TransactionJsonSerializer;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.UserJsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonSerialize(using = TransactionJsonSerializer.class)
+//@JsonSerialize(using = TransactionJsonSerializer.class)
 public class Transaction {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -31,7 +26,7 @@ public class Transaction {
         this.crypto = crypto;
         this.amountOfCrypto = amountOfCrypto;
         this.priceOfCryto = priceOfCryto;
-        this.priceInARS = amountOfCrypto*priceOfCryto;
+        this.priceInARS = amountOfCrypto*priceOfCryto; //calcular en base a la cot del dolar
         this.user = user;
         this.transactionType = transactionType;
     }

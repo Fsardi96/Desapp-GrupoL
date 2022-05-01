@@ -72,15 +72,5 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-    public String getNewDate(){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        return  formatter.format(date);
-    }
 
-    public void addTransactionToUser(User user, Transaction newTransaction) {
-        user.addTransaction(newTransaction);
-        transactionRepository.save(newTransaction);
-        userRepository.save(user);
-    }
 }
