@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,19 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<User> findUser(Long id){
-        return this.userRepository.findById(id);
+    public User findUser(Long id){
+        return  userRepository.findById(id).orElseThrow(UserNotFound::new);
     }
+
 
     @Transactional
     public User createUser(User usuario) throws UserError {
         if(this.isValidUser(usuario)){
-            usuario.setId(this.idgenerador+1);
+            User user = new User(usuario.getName(), usuario.getSurname(), usuario.getEmail(), usuario.getAddress(),
+                                 usuario.getPassword(), usuario.getCvu(), usuario.getWallet());
+            user.setId(this.idgenerador+1);
             idgenerador++;
-            return this.userRepository.save(usuario);
+            return this.userRepository.save(user);
         }
         throw new UserError("One or more fields are incorrect");
     }

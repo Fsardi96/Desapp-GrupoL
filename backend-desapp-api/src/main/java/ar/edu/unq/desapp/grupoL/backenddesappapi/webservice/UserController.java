@@ -32,8 +32,14 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable Long id){
-        Optional<User> userFound = userService.findUser(id);
+        User userFound = userService.findUser(id);
         return ResponseEntity.ok().body(userFound);
+    }
+
+    @GetMapping("/userTransactions/{id}")
+    public ResponseEntity<?> getUserTransactions(@PathVariable Long id){
+        User userFound = userService.findUser(id); //crear validación si el user existe.
+        return ResponseEntity.ok().body(userFound.getTransactions());
     }
 
     @GetMapping("/getCrypoValue/{symbol}")
@@ -46,6 +52,7 @@ public class UserController {
         }
         return ResponseEntity.ok().body(entity);
     }
+
 
     @GetMapping("/getCrypoValue/all")
     public ResponseEntity<?> getAllCryptoCurrencyPrices() {
@@ -68,13 +75,16 @@ public class UserController {
 
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public Transaction createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
-        User user = this.userService.findUser(userID).get();       //crear validación si el user existe.
+        User user = this.userService.findUser(userID);       //crear validación si el user existe.
         UserDTO userDTO = new UserDTO(user.getId(),user.getName(),user.getSurname());
         Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
-                                                    transaction.getPriceInARS(),userDTO ,transaction.getTransactionType());
+                                                    transaction.getPriceInARS(), userDTO, transaction.getTransactionType());
         user.addTransaction(newTransaction);
         return newTransaction;
     }
+
+
+
 
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable Long id){

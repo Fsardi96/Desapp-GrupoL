@@ -24,7 +24,7 @@ public class User {
 
     public User() { }
 
-    public User(String name, String surname, String email, String address, String password, String cvu, String wallet, Float score, Integer operationsNumber) {
+    public User(String name, String surname, String email, String address, String password, String cvu, String wallet) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -32,7 +32,7 @@ public class User {
         this.password = password;
         this.cvu = cvu;
         this.wallet = wallet;
-        this.score = Float.valueOf(0);
+        this.score = (float) 0;
         this.operationsNumber = 0;
         this.transactions = new ArrayList<>();
     }
@@ -98,16 +98,6 @@ public class User {
         this.wallet = wallet;
     }
 
-/*
-    public ArrayList<Transaction> getTransactions() {
-        return this.transactions;
-    }*/
-
-
-    public void addTransaction (Transaction transaction){
-        this.transactions.add(transaction);
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -117,5 +107,33 @@ public class User {
         return id;
     }
 
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+
+    public void addTransaction (Transaction transaction){
+        this.transactions.add(transaction);
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    public Integer getOperationsNumber() {
+        return operationsNumber;
+    }
+
+    public void setOperationsNumber(Integer operationsNumber) {
+        this.operationsNumber = operationsNumber;
+    }
 }
 
