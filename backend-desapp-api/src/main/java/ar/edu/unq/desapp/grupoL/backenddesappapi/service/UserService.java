@@ -2,7 +2,9 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.TransactionRepository;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
 
     public UserService(){}
 
@@ -74,4 +78,9 @@ public class UserService {
         return  formatter.format(date);
     }
 
+    public void addTransactionToUser(User user, Transaction newTransaction) {
+        user.addTransaction(newTransaction);
+        transactionRepository.save(newTransaction);
+        userRepository.save(user);
+    }
 }

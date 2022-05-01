@@ -1,10 +1,14 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.UserJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 
 
 @Entity
+@JsonSerialize(using = UserJsonSerializer.class)
 public class User {
 
     @Id

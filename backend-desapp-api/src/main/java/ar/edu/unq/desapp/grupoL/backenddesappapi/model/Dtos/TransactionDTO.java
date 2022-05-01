@@ -1,39 +1,33 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
+
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TransactionDTO {
 
-   // private Long id;
-    private String dateAndTime;
+
+ @JsonProperty
     private String crypto;
+ @JsonProperty
     private Float amountOfCrypto;
+ @JsonProperty
     private Float priceOfCryto;
-    private Float priceInARS;
-    //@OneToOne//(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserDTO user;
-    private Integer operationsNumber;
-    private String score;
+ @JsonProperty
+    private String transactionType;
 
 
 
-public TransactionDTO(String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCryto, Float priceInARS, UserDTO user, Integer operationsNumber, String score){
- this.dateAndTime = dateAndTime;
+
+public TransactionDTO( @JsonProperty("crypto") String crypto, @JsonProperty("amountOfCrypto") Float amountOfCrypto, @JsonProperty("priceOfCryto")Float priceOfCryto,
+                       @JsonProperty("transactionType")String transactionType){
+
  this.crypto = crypto;
  this.amountOfCrypto = amountOfCrypto;
  this.priceOfCryto = priceOfCryto;
- this.priceInARS = priceInARS;
- this.user = user;
- this.operationsNumber = operationsNumber;
- this.score = score;
+ this.transactionType =  transactionType;
 }
 
-
- public String getDateAndTime() {
-  return dateAndTime;
- }
-
- public void setDateAndTime(String dateAndTime) {
-  this.dateAndTime = dateAndTime;
- }
 
  public String getCrypto() {
   return crypto;
@@ -59,35 +53,11 @@ public TransactionDTO(String dateAndTime, String crypto, Float amountOfCrypto, F
   this.priceOfCryto = priceOfCryto;
  }
 
- public Float getPriceInARS() {
-  return priceInARS;
+ public String getTransactionType() {
+  return transactionType;
  }
 
- public void setPriceInARS(Float priceInARS) {
-  this.priceInARS = priceInARS;
- }
-
- public UserDTO getUser() {
-  return user;
- }
-
- public void setUser(UserDTO user) {
-  this.user = user;
- }
-
- public Integer getOperationsNumber() {
-  return operationsNumber;
- }
-
- public void setOperationsNumber(Integer operationsNumber) {
-  this.operationsNumber = operationsNumber;
- }
-
- public String getScore() {
-  return score;
- }
-
- public void setScore(String score) {
-  this.score = score;
+ public void setTransactionType(String transactionType) {
+  this.transactionType = transactionType;
  }
 }

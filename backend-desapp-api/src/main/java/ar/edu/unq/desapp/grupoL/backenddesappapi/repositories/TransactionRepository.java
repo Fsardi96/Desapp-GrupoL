@@ -1,12 +1,10 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.repositories;
 
-import java.util.ArrayList;
-
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
+import org.springframework.stereotype.Repository;
 
 @Configuration
 @Repository
-public interface UserRepository extends CrudRepository<User,Long>{ }
+public interface TransactionRepository  extends CrudRepository<Transaction,Long> { }

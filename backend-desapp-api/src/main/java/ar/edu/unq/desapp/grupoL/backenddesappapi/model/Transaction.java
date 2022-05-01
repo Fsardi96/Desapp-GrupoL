@@ -1,30 +1,37 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.TransactionJsonSerializer;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.UserJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonSerialize(using = TransactionJsonSerializer.class)
 public class Transaction {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String dateAndTime;
-
     //private CryptoCurrency crypto;
     private String crypto;
     private Float amountOfCrypto;
+    private Float priceOfCryto;
     private Float priceInARS;
-    @OneToOne//(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserDTO user;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private User user;
     private String transactionType;
 
     public Transaction() { }
 
-    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceInARS, UserDTO user, String transactionType) {
+    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCryto, User user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.amountOfCrypto = amountOfCrypto;
-        this.priceInARS = priceInARS;
+        this.priceOfCryto = priceOfCryto;
+        this.priceInARS = amountOfCrypto*priceOfCryto;
         this.user = user;
         this.transactionType = transactionType;
     }
@@ -70,11 +77,11 @@ public class Transaction {
         this.priceInARS = priceInARS;
     }
 
-    public UserDTO getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -87,4 +94,11 @@ public class Transaction {
     }
 
 
+    public Float getPriceOfCryto() {
+        return priceOfCryto;
+    }
+
+    public void setPriceOfCryto(Float priceOfCryto) {
+        this.priceOfCryto = priceOfCryto;
+    }
 }

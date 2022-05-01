@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
@@ -74,16 +75,16 @@ public class UserController {
     }
 
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
-    public Transaction createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
-        User user = this.userService.findUser(userID);       //crear validación si el user existe.
-        UserDTO userDTO = new UserDTO(user.getId(),user.getName(),user.getSurname());
-        Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
-                                                    transaction.getPriceInARS(), userDTO, transaction.getTransactionType());
-        user.addTransaction(newTransaction);
-        return newTransaction;
+    public void createTransaction(@PathVariable Long userID, @RequestBody TransactionDTO transaction) {
+        User user = this.userService.findUser(userID);
+        //UserDTO userDTO = new UserDTO(user.getId(),user.getName(),user.getSurname());
+        Transaction newTransaction = new Transaction(userService.getNewDate(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCryto(),
+                                                    user, transaction.getTransactionType());
+
+
+        userService.addTransactionToUser(user,newTransaction);
+       // return newTransaction; //debe devolver un transactionDTO para ocultar los datos enteros del user.
     }
-
-
 
 
     @DeleteMapping("/deleteUser/{id}")

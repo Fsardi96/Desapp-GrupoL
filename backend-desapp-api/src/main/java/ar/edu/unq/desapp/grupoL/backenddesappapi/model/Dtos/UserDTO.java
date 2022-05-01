@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,12 +9,15 @@ import javax.persistence.Id;
 @Entity
 public class UserDTO {
     @Id
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private String name;
+    @JsonProperty
     private String surname;
 
 
-public UserDTO(Long id , String name, String surname){
+public UserDTO(@JsonProperty("id")Long id , @JsonProperty("name")String name,@JsonProperty("surname") String surname){
     this.id = id;
     this.name = name;
     this.surname = surname;
