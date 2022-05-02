@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Analyze on SonarCloud
-          command: mvn verify sonar:sonar -Dsonar.projectKey=Fsardi96_Desapp-GrupoL
+          command: gradle build sonarqube
 
 workflows:
   main:
