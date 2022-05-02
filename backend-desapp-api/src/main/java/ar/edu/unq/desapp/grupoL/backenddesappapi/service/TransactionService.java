@@ -2,9 +2,6 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.TransactionNotFound;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.TransactionRepository;
@@ -33,7 +30,7 @@ public class TransactionService {
     @Transactional
     public Transaction createTransaction(Transaction transaction,User user) {
 
-        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCryto(),
+        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCrypto(),
                                                     user,transaction.getTransactionType());
         //Transaction.setId(this.idgenerador+1);
         //idgenerador++;

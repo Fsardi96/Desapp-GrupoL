@@ -13,7 +13,7 @@ public class Transaction {
     //private CryptoCurrency crypto;
     private String crypto;
     private Float amountOfCrypto;
-    private Float priceOfCryto;
+    private Float priceOfCrypto;
     private Float priceInARS;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
@@ -21,12 +21,12 @@ public class Transaction {
 
     public Transaction() { }
 
-    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCryto, User user, String transactionType) {
+    public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, User user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.amountOfCrypto = amountOfCrypto;
-        this.priceOfCryto = priceOfCryto;
-        this.priceInARS = amountOfCrypto*priceOfCryto; //calcular en base a la cot del dolar
+        this.priceOfCrypto = priceOfCrypto;
+        this.priceInARS = amountOfCrypto* priceOfCrypto; //calcular en base a la cot del dolar
         this.user = user;
         this.transactionType = transactionType;
     }
@@ -89,11 +89,11 @@ public class Transaction {
     }
 
 
-    public Float getPriceOfCryto() {
-        return priceOfCryto;
+    public Float getPriceOfCrypto() {
+        return priceOfCrypto;
     }
 
-    public void setPriceOfCryto(Float priceOfCryto) {
-        this.priceOfCryto = priceOfCryto;
+    public void setPriceOfCrypto(Float priceOfCryto) {
+        this.priceOfCrypto = priceOfCryto;
     }
 }
