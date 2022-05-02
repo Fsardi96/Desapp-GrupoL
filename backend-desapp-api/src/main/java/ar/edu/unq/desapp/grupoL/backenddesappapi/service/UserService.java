@@ -21,8 +21,6 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    TransactionRepository transactionRepository;
 
     public UserService(){}
 
@@ -71,6 +69,4 @@ public class UserService {
     public void deleteUser(Long id){
         this.userRepository.deleteById(id);
     }
-
-
 }

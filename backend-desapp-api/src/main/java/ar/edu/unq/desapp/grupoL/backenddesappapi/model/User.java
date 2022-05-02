@@ -23,8 +23,7 @@ public class User {
     private String wallet;
     private String score;
     private Integer operationsNumber;
-    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //LAZY O EAGER?
-    private ArrayList<Transaction> transactions = new ArrayList<>();*/
+
 
     public User() { }
 
@@ -38,7 +37,6 @@ public class User {
         this.wallet = wallet;
         this.score = "Sin operaciones";
         this.operationsNumber = 0;
-        //this.transactions = new ArrayList<>();
     }
 
    /* public Long incrementarID(){
@@ -110,19 +108,6 @@ public class User {
     public Long getId() {
         return id;
     }
-/*
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
-    }
-
-
-    public void addTransaction (Transaction transaction){
-        this.transactions.add(transaction);
-    }*/
 
     public String getScore() {
         return score;

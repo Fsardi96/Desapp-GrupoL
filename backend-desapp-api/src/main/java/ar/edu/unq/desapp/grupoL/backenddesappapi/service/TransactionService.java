@@ -19,7 +19,8 @@ public class TransactionService {
     public TransactionService(){}
 
     @Transactional
-    public ArrayList<Transaction> getTransactions(){return (ArrayList<Transaction>) this.transactionRepository.findAll();
+    public ArrayList<Transaction> getTransactions(){
+        return (ArrayList<Transaction>) this.transactionRepository.findAll();
     }
 
     @Transactional
