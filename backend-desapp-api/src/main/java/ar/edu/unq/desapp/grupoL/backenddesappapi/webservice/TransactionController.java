@@ -20,17 +20,19 @@ public class TransactionController {
     @Autowired
     private UserService userService;
 
-
-
-
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public Transaction createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
         User user = this.userService.findUser(userID);
         Transaction transaction1 = transactionService.createTransaction(transaction,user);
+
         // crear TransactionDTO
         return transaction1; //debe devolver un transactionDTO para ocultar los datos enteros del user.
+
+/*        User user = this.userService.findUser(userID);
+        String username = user.getName() + " " + user.getSurname();
+        TransactionDTO dto = new TransactionDTO(transaction.getCrypto(), transaction.getAmountOfCrypto(),
+                transaction.getPriceOfCrypto(), transaction.getPriceInARS(), transaction.getTransactionType(), username);
+        return dto;*/
     }
-
-
 
 }
