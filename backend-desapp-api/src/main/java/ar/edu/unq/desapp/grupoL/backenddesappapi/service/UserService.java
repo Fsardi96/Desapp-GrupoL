@@ -24,7 +24,7 @@ public class UserService {
 
     public UserService(){}
 
-    private Long idgenerador = Long.valueOf(0);
+    //private Long idgenerador = Long.valueOf(0);
 
     @Transactional
     public ArrayList<User> getUsers(){
@@ -42,8 +42,8 @@ public class UserService {
         if(this.isValidUser(usuario)){
             User user = new User(usuario.getName(), usuario.getSurname(), usuario.getEmail(), usuario.getAddress(),
                                  usuario.getPassword(), usuario.getCvu(), usuario.getWallet());
-            user.setId(this.idgenerador+1);
-            idgenerador++;
+            //user.setId(this.idgenerador+1);
+           // idgenerador++;
             return this.userRepository.save(user);
         }
         throw new UserError("One or more fields are incorrect");

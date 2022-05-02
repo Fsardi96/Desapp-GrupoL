@@ -70,7 +70,7 @@ public class UserController {
         return ResponseEntity.ok().body(list);
     }
 
-    @PostMapping("/addUser")
+    @PostMapping(path="/addUser" , consumes = "application/json", produces = "application/json")
     public User createUser(@RequestBody User user) throws UserError{
         return this.userService.createUser(user);
     }

@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonSerialize(using = UserJsonSerializer.class)
 public class User {
-
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
@@ -37,10 +37,13 @@ public class User {
         this.operationsNumber = 0;
     }
 
-   /* public Long incrementarID(){
-        this.id ++;
-        return this.id;
-    }*/
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -96,15 +99,6 @@ public class User {
 
     public void setWallet(String wallet) {
         this.wallet = wallet;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
     }
 
     public String getScore() {
