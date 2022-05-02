@@ -3,8 +3,6 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TransactionTest {
 
     User user = new User("Pepe", "Garcia", "pepe@gmail.com",
@@ -26,7 +24,6 @@ class TransactionTest {
     @Test
     void testEmptyConstructor() {
         Transaction transaction = new Transaction();
-
         transaction.setDateAndTime("dateAndTime");
         transaction.setCrypto("crypto");
         transaction.setAmountOfCrypto(10f);
