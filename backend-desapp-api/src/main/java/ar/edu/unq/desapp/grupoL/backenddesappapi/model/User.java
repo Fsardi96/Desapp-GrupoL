@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javax.persistence.*;
 import java.util.ArrayList;
 
-
 @Entity
 @JsonSerialize(using = UserJsonSerializer.class)
 public class User {
@@ -23,7 +22,6 @@ public class User {
     private String wallet;
     private String score;
     private Integer operationsNumber;
-
 
     public User() { }
 

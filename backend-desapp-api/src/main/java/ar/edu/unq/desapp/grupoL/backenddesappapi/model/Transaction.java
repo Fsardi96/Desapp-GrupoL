@@ -91,7 +91,6 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-
     public Float getPriceOfCrypto() {
         return priceOfCrypto;
     }
