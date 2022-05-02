@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -19,8 +20,8 @@ public class TransactionService {
     public TransactionService(){}
 
     @Transactional
-    public ArrayList<Transaction> getTransactions(){
-        return (ArrayList<Transaction>) this.transactionRepository.findAll();
+    public List<Transaction> getTransactions(){
+        return this.transactionRepository.findAll();
     }
 
     @Transactional
@@ -33,8 +34,6 @@ public class TransactionService {
 
         Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCrypto(),
                                                     user,transaction.getTransactionType());
-        //Transaction.setId(this.idgenerador+1);
-        //idgenerador++;
         return this.transactionRepository.save(newTransaction);
     }
 

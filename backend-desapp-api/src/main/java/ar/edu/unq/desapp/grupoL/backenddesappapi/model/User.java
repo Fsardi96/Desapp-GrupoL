@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 @Entity
-//@JsonSerialize(using = UserJsonSerializer.class)
+@JsonSerialize(using = UserJsonSerializer.class)
 public class User {
 
     @Id

@@ -14,7 +14,8 @@ public class TransactionDTO {
  private String transactionType;
  private String userFullName;
 
- public TransactionDTO(String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName) {
+ public TransactionDTO(Long id,String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName) {
+  this.id = id;
   this.crypto = crypto;
   this.amountOfCrypto = amountOfCrypto;
   this.priceOfCrypto = priceOfCrypto;

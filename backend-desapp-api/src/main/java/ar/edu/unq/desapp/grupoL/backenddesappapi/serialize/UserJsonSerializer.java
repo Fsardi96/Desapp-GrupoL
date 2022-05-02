@@ -26,11 +26,11 @@ public class UserJsonSerializer extends JsonSerializer<User> {
         jgen.writeObjectField("operationsNumber", user.getOperationsNumber());
 
 
-       // serializeTransactions(jgen, user);
+        //serializeTransactions(jgen, user);
         jgen.writeEndObject();
     }
 
-   /* private void serializeTransactions(JsonGenerator jgen, User user) throws IOException {
+    /*private void serializeTransactions(JsonGenerator jgen, User user) throws IOException {
         jgen.writeFieldName("transactions");
         jgen.writeStartArray();
         user.getTransactions().stream().forEach(transaction -> {

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Transactional
@@ -23,7 +24,7 @@ public class TransactionController {
     private UserService userService;
 
     @GetMapping("/transactions")
-    public ArrayList<Transaction> getTransactions(){
+    public List<Transaction> getTransactions(){
         return transactionService.getTransactions();
     }
 
@@ -31,12 +32,10 @@ public class TransactionController {
     public TransactionDTO createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
         User user = this.userService.findUser(userID);
         String username = user.getName() + " " + user.getSurname();
-        transactionService.createTransaction(transaction,user);
+        Transaction savedTransaction = transactionService.createTransaction(transaction,user);
 
-        TransactionDTO dto = new TransactionDTO(transaction.getCrypto(), transaction.getAmountOfCrypto(),
-                transaction.getPriceOfCrypto(), transaction.getPriceInARS(), transaction.getTransactionType(), username);
-
-        return dto;
+        return new TransactionDTO(savedTransaction.getId(),savedTransaction.getCrypto(), savedTransaction.getAmountOfCrypto(),
+                savedTransaction.getPriceOfCrypto(), savedTransaction.getPriceInARS(), savedTransaction.getTransactionType(), username);
     }
 
 }
