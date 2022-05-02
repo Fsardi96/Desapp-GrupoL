@@ -1,10 +1,13 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.TransactionJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@JsonSerialize(using = TransactionJsonSerializer.class)
+@JsonSerialize(using = TransactionJsonSerializer.class)
 public class Transaction {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

@@ -17,7 +17,7 @@ public class UserJsonSerializer extends JsonSerializer<User> {
         jgen.writeNumberField("id", user.getId());
         jgen.writeStringField("name", user.getName());
         jgen.writeStringField("surname", user.getSurname());
-        jgen.writeStringField("mail", user.getEmail());
+        jgen.writeStringField("email", user.getEmail());
         jgen.writeStringField("address", user.getAddress());
         jgen.writeStringField("password", user.getPassword());
         jgen.writeStringField("cvu", user.getCvu());
@@ -26,11 +26,11 @@ public class UserJsonSerializer extends JsonSerializer<User> {
         jgen.writeObjectField("operationsNumber", user.getOperationsNumber());
 
 
-       // serializeTransactions(jgen, user);
+        //serializeTransactions(jgen, user);
         jgen.writeEndObject();
     }
 
-   /* private void serializeTransactions(JsonGenerator jgen, User user) throws IOException {
+    /*private void serializeTransactions(JsonGenerator jgen, User user) throws IOException {
         jgen.writeFieldName("transactions");
         jgen.writeStartArray();
         user.getTransactions().stream().forEach(transaction -> {
