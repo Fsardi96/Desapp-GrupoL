@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'war'
+	id "jacoco"
 	id "org.sonarqube" version "3.3"
 }
 
@@ -40,21 +41,16 @@ sonarqube {
 	}
 }
 
-
-
-
 test {
 	useJUnitPlatform()
 }
-
-
-
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '7.4.2'
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
 }
-
