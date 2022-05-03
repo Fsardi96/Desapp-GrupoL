@@ -8,9 +8,11 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonSerialize(using = TransactionJsonSerializer.class)
+@Table
 public class Transaction {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column
     private Long id;
     private String dateAndTime;
     //private CryptoCurrency crypto;
@@ -18,6 +20,7 @@ public class Transaction {
     private Float amountOfCrypto;
     private Float priceOfCrypto;
     private Float priceInARS;
+    @JoinColumn(name="User")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
     private String transactionType;

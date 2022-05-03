@@ -37,7 +37,7 @@ public class TransactionService {
         return this.transactionRepository.save(newTransaction);
     }
 
-
-
-
+    public List<Transaction> getTransactionsByUserId(Long id) {
+        return this.transactionRepository.getTransactionsByUserId(id);
+    }
 }

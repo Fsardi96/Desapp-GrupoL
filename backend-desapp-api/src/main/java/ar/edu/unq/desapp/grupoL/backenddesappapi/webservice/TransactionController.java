@@ -28,6 +28,11 @@ public class TransactionController {
         return transactionService.getTransactions();
     }
 
+    @GetMapping("/transactionsByUserId/{id}")
+        public List<Transaction> getTransactionsByUserId(@PathVariable Long id) {
+        return transactionService.getTransactionsByUserId(id);
+    }
+
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public TransactionDTO createTransaction(@PathVariable Long userID, @RequestBody Transaction transaction) {
         User user = this.userService.findUser(userID);

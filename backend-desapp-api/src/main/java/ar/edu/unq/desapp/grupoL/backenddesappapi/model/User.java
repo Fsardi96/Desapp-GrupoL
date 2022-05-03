@@ -9,10 +9,13 @@ import java.util.ArrayList;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonSerialize(using = UserJsonSerializer.class)
+@Table
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String name;
     private String surname;
     private String email;
