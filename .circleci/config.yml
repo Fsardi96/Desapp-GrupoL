@@ -1,16 +1,19 @@
 version: 2.1
 
 jobs:
-  say-hello:
+  build:
     docker:
-      - image: cimg/base:stable
+      - image: 'circleci/openjdk:11-jdk'
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Analyze on SonarCloud
+          command: gradle build sonarqube"
 
 workflows:
-  say-hello-workflow:
+  main:
     jobs:
-      - say-hello
+      - build:
+          context: SonarCloud
+
+
