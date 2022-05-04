@@ -7,21 +7,29 @@ import javax.persistence.Id;
 public class TransactionDTO {
  @Id
  private Long id;
+ private String dateAndTime;
  private String crypto;
  private Float amountOfCrypto;
  private Float priceOfCrypto;
  private Float priceInARS;
  private String transactionType;
  private String userFullName;
+ private Integer operationsNumber;
+ private String score;
 
- public TransactionDTO(Long id,String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName) {
+
+
+ public TransactionDTO(Long id, String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName, Integer operationsNumber, String score) {
   this.id = id;
+  this.dateAndTime = dateAndTime;
   this.crypto = crypto;
   this.amountOfCrypto = amountOfCrypto;
   this.priceOfCrypto = priceOfCrypto;
   this.priceInARS = priceInARS;
   this.transactionType = transactionType;
   this.userFullName = userFullName;
+  this.operationsNumber = operationsNumber;
+  this.score = score;
  }
 
  public TransactionDTO() { }
@@ -81,5 +89,29 @@ public class TransactionDTO {
 
  public void setUserFullName(String userFullName) {
   this.userFullName = userFullName;
+ }
+
+ public Integer getOperationsNumber() {
+  return operationsNumber;
+ }
+
+ public void setOperationsNumber(Integer operationsNumber) {
+  this.operationsNumber = operationsNumber;
+ }
+
+ public String getScore() {
+  return score;
+ }
+
+ public void setScore(String score) {
+  this.score = score;
+ }
+
+ public String getDateAndTime() {
+  return dateAndTime;
+ }
+
+ public void setDateAndTime(String dateAndTime) {
+  this.dateAndTime = dateAndTime;
  }
 }

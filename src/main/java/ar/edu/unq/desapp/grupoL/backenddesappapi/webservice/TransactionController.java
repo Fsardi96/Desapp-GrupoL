@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
@@ -24,13 +23,14 @@ public class TransactionController {
     private UserService userService;
 
     @GetMapping("/transactions")
-    public List<Transaction> getTransactions(){
-        return transactionService.getTransactions();
+    public List<TransactionDTO> getTransactions(){
+        return this.transactionService.processTransactionsToDTO(transactionService.getTransactions());
     }
 
     @GetMapping("/transactionsByUserId/{id}")
-        public List<Transaction> getTransactionsByUserId(@PathVariable Long id) {
-        return transactionService.getTransactionsByUserId(id);
+        public List<TransactionDTO> getTransactionsByUserId(@PathVariable Long id) {
+         transactionService.getTransactionsByUserId(id);
+         return this.transactionService.processTransactionsToDTO(transactionService.getTransactionsByUserId(id));
     }
 
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
@@ -39,8 +39,9 @@ public class TransactionController {
         String username = user.getName() + " " + user.getSurname();
         Transaction savedTransaction = transactionService.createTransaction(transaction,user);
 
-        return new TransactionDTO(savedTransaction.getId(),savedTransaction.getCrypto(), savedTransaction.getAmountOfCrypto(),
-                savedTransaction.getPriceOfCrypto(), savedTransaction.getPriceInARS(), savedTransaction.getTransactionType(), username);
+        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(), savedTransaction.getCrypto(), savedTransaction.getAmountOfCrypto(),
+                savedTransaction.getPriceOfCrypto(), savedTransaction.getPriceInARS(), savedTransaction.getTransactionType(),
+                username, user.getOperationsNumber(), user.getScore());
     }
 
 }

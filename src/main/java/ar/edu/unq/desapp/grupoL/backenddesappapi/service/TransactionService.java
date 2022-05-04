@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.TransactionRepository;
@@ -39,5 +40,18 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsByUserId(Long id) {
         return this.transactionRepository.getTransactionsByUserId(id);
+    }
+
+
+    public List<TransactionDTO> processTransactionsToDTO(List<Transaction> retrievedTransactions) {
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+
+        retrievedTransactions.stream().forEach((transaction) -> {
+            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
+                    transaction.getPriceOfCrypto(), transaction.getPriceInARS(), transaction.getTransactionType(),
+                    transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
+                    transaction.getUser().getScore()));
+        });
+        return transactionDTOS;
     }
 }

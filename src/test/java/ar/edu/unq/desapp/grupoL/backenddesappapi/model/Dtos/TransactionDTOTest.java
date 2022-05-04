@@ -1,17 +1,13 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionDTOTest {
     @Test
     void testTransactionDTOModel() {
-        TransactionDTO dto = new TransactionDTO(2L,"crypto",10f,10f,
-                10f,"type","Pepe");
+        TransactionDTO dto = new TransactionDTO(2L, "dateAndTime", "crypto",10f,10f,
+                10f,"type","Pepe", 0, "SinOperaciones");
 
         Assertions.assertEquals(dto.getId(), 2L);
         Assertions.assertEquals(dto.getCrypto(), "crypto");
@@ -20,6 +16,8 @@ class TransactionDTOTest {
         Assertions.assertEquals(dto.getPriceInARS(), 10f);
         Assertions.assertEquals(dto.getTransactionType(), "type");
         Assertions.assertEquals(dto.getUserFullName(), "Pepe");
+        Assertions.assertEquals(dto.getOperationsNumber(), 0);
+        Assertions.assertEquals(dto.getScore(), "SinOperaciones");
     }
 
     @Test
