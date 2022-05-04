@@ -13,12 +13,12 @@ class TransactionTest {
         Transaction transaction = new Transaction("dateAndTime", "crypto",
                 10f, 10f, user, "transactionType");
 
-        Assertions.assertEquals(transaction.getDateAndTime(), "dateAndTime");
-        Assertions.assertEquals(transaction.getCrypto(), "crypto");
-        Assertions.assertEquals(transaction.getAmountOfCrypto(), 10f);
-        Assertions.assertEquals(transaction.getPriceOfCrypto(), 10f);
+        Assertions.assertEquals("dateAndTime", transaction.getDateAndTime());
+        Assertions.assertEquals("crypto", transaction.getCrypto());
+        Assertions.assertEquals(10f, transaction.getAmountOfCrypto());
+        Assertions.assertEquals(10f, transaction.getPriceOfCrypto());
         Assertions.assertEquals(transaction.getUser(), user);
-        Assertions.assertEquals(transaction.getTransactionType(), "transactionType");
+        Assertions.assertEquals("transactionType", transaction.getTransactionType());
     }
 
     @Test
@@ -32,12 +32,12 @@ class TransactionTest {
         transaction.setTransactionType("transactionType");
         transaction.setPriceInARS(10f);
 
-        Assertions.assertEquals(transaction.getDateAndTime(), "dateAndTime");
-        Assertions.assertEquals(transaction.getCrypto(), "crypto");
-        Assertions.assertEquals(transaction.getAmountOfCrypto(), 10f);
-        Assertions.assertEquals(transaction.getPriceOfCrypto(), 10f);
+        Assertions.assertEquals("dateAndTime", transaction.getDateAndTime());
+        Assertions.assertEquals("crypto", transaction.getCrypto());
+        Assertions.assertEquals(10f, transaction.getAmountOfCrypto());
+        Assertions.assertEquals(10f, transaction.getPriceOfCrypto());
         Assertions.assertEquals(transaction.getUser(), user);
-        Assertions.assertEquals(transaction.getTransactionType(), "transactionType");
-        Assertions.assertEquals(transaction.getPriceInARS(), 10f);
+        Assertions.assertEquals("transactionType", transaction.getTransactionType());
+        Assertions.assertEquals(10f, transaction.getPriceInARS());
     }
 }

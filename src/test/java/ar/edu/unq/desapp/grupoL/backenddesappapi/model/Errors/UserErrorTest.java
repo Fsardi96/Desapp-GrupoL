@@ -7,6 +7,6 @@ class UserErrorTest {
     @Test
     void testUserErrorModel () {
         UserError error = new UserError("error");
-        Assertions.assertEquals(error.getMessage(), "error");
+        Assertions.assertEquals("error", error.getMessage());
     }
 }

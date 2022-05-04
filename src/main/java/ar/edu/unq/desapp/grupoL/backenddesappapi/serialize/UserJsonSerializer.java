@@ -25,25 +25,8 @@ public class UserJsonSerializer extends JsonSerializer<User> {
         jgen.writeStringField("score", user.getScore());
         jgen.writeObjectField("operationsNumber", user.getOperationsNumber());
 
-
-        //serializeTransactions(jgen, user);
         jgen.writeEndObject();
     }
-
-    /*private void serializeTransactions(JsonGenerator jgen, User user) throws IOException {
-        jgen.writeFieldName("transactions");
-        jgen.writeStartArray();
-        user.getTransactions().stream().forEach(transaction -> {
-            try {
-                jgen.writeObject(transaction);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        jgen.writeEndArray();
-    }*/
-
-
 }
 
 

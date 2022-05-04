@@ -9,9 +9,9 @@ class CryptoCurrencyTest {
     void testCryptoCurrencyModel() {
         CryptoCurrency crypto = new CryptoCurrency("symbol", 10f, "date");
 
-        Assertions.assertEquals(crypto.getSymbol(), "symbol");
-        Assertions.assertEquals(crypto.getPrice(), 10f);
-        Assertions.assertEquals(crypto.getLastUpdateDateAndTime(), "date");
+        Assertions.assertEquals("symbol", crypto.getSymbol());
+        Assertions.assertEquals(10f, crypto.getPrice());
+        Assertions.assertEquals("date", crypto.getLastUpdateDateAndTime());
     }
 
     @Test
@@ -21,9 +21,9 @@ class CryptoCurrencyTest {
         crypto.setPrice(10f);
         crypto.setLastUpdateDateAndTime("date");
 
-        Assertions.assertEquals(crypto.getSymbol(), "symbol");
-        Assertions.assertEquals(crypto.getPrice(), 10f);
-        Assertions.assertEquals(crypto.getLastUpdateDateAndTime(), "date");
+        Assertions.assertEquals("symbol", crypto.getSymbol());
+        Assertions.assertEquals(10f, crypto.getPrice());
+        Assertions.assertEquals("date", crypto.getLastUpdateDateAndTime());
     }
 }
 

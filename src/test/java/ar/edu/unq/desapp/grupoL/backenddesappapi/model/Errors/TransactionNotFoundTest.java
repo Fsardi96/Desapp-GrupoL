@@ -7,6 +7,6 @@ class TransactionNotFoundTest {
     @Test
     void testTransactionNotFoundModel () {
         TransactionNotFound error = new TransactionNotFound("error");
-        Assertions.assertEquals(error.getMessage(), "error");
+        Assertions.assertEquals("error", error.getMessage());
     }
 }

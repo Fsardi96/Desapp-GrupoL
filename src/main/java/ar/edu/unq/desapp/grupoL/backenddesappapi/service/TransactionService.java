@@ -18,7 +18,9 @@ public class TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    public TransactionService(){}
+    public TransactionService() {
+        //Empty constructor
+    }
 
     @Transactional
     public List<Transaction> getTransactions(){
@@ -26,9 +28,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction findTransaction(Long id){return  transactionRepository.findById(id).get();   //.orElseThrow(TransactionNotFound::new);
+    public Transaction findTransaction(Long id){return  transactionRepository.findById(id).get();
     }
-
 
     @Transactional
     public Transaction createTransaction(Transaction transaction,User user) {

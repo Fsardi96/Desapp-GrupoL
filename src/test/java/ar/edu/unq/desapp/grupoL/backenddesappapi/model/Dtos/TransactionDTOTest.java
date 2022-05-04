@@ -9,15 +9,13 @@ class TransactionDTOTest {
         TransactionDTO dto = new TransactionDTO(2L, "dateAndTime", "crypto",10f,10f,
                 10f,"type","Pepe", 0, "SinOperaciones");
 
-        Assertions.assertEquals(dto.getId(), 2L);
-        Assertions.assertEquals(dto.getCrypto(), "crypto");
-        Assertions.assertEquals(dto.getAmountOfCrypto(), 10f);
-        Assertions.assertEquals(dto.getPriceOfCrypto(), 10f);
-        Assertions.assertEquals(dto.getPriceInARS(), 10f);
-        Assertions.assertEquals(dto.getTransactionType(), "type");
-        Assertions.assertEquals(dto.getUserFullName(), "Pepe");
-        Assertions.assertEquals(dto.getOperationsNumber(), 0);
-        Assertions.assertEquals(dto.getScore(), "SinOperaciones");
+        Assertions.assertEquals(2L, dto.getId());
+        Assertions.assertEquals("crypto", dto.getCrypto());
+        Assertions.assertEquals(10f, dto.getAmountOfCrypto());
+        Assertions.assertEquals(10f, dto.getPriceOfCrypto());
+        Assertions.assertEquals(10f, dto.getPriceInARS());
+        Assertions.assertEquals("type", dto.getTransactionType());
+        Assertions.assertEquals("Pepe", dto.getUserFullName());
     }
 
     @Test
@@ -31,12 +29,12 @@ class TransactionDTOTest {
         dto.setPriceOfCrypto(10f);
         dto.setUserFullName("Pepe");
 
-        Assertions.assertEquals(dto.getId(), 2L);
-        Assertions.assertEquals(dto.getCrypto(), "crypto");
-        Assertions.assertEquals(dto.getAmountOfCrypto(), 10f);
-        Assertions.assertEquals(dto.getPriceOfCrypto(), 10f);
-        Assertions.assertEquals(dto.getPriceInARS(), 10f);
-        Assertions.assertEquals(dto.getTransactionType(), "type");
-        Assertions.assertEquals(dto.getUserFullName(), "Pepe");
+        Assertions.assertEquals(2L, dto.getId());
+        Assertions.assertEquals("crypto", dto.getCrypto());
+        Assertions.assertEquals(10f, dto.getAmountOfCrypto());
+        Assertions.assertEquals(10f, dto.getPriceOfCrypto());
+        Assertions.assertEquals(10f, dto.getPriceInARS());
+        Assertions.assertEquals("type", dto.getTransactionType());
+        Assertions.assertEquals("Pepe", dto.getUserFullName());
     }
 }

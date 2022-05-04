@@ -9,6 +9,6 @@ class UserNotFoundTest {
     @Test
     void testUserNotFoundModel () {
         UserNotFound error = new UserNotFound();
-        Assertions.assertEquals(error.getMessage(), "There is not a registered user with that ID");
+        Assertions.assertEquals("There is not a registered user with that ID", error.getMessage());
     }
 }

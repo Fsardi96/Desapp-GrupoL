@@ -30,7 +30,7 @@ public class UserControllerTest {
                 .when(restTemplate.getForEntity(ArgumentMatchers.anyString(), ArgumentMatchers.eq(CryptoCurrency.class)))
                 .thenReturn(cryptoResponse);
 
-        Assertions.assertEquals(cryptoResponse.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(HttpStatus.OK, cryptoResponse.getStatusCode());
         Assertions.assertEquals(cryptoResponse.getBody().getPrice(), crypto.getPrice());
         Assertions.assertEquals(cryptoResponse.getBody().getSymbol(), crypto.getSymbol());
         Assertions.assertEquals(cryptoResponse.getBody().getLastUpdateDateAndTime(), crypto.getLastUpdateDateAndTime());

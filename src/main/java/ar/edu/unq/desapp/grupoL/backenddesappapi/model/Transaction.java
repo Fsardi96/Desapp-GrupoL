@@ -15,7 +15,6 @@ public class Transaction {
     @Column
     private Long id;
     private String dateAndTime;
-    //private CryptoCurrency crypto;
     private String crypto;
     private Float amountOfCrypto;
     private Float priceOfCrypto;

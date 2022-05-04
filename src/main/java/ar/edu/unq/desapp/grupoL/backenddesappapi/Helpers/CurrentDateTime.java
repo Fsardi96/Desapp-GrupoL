@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CurrentDateTime {
-    public CurrentDateTime() { };
+
+    private CurrentDateTime() {
+        //Empty Constructor
+    };
 
     public static Date getNewDate(){
         return new Date();

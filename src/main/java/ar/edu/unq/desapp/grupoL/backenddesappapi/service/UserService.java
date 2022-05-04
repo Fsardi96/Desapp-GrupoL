@@ -22,9 +22,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserService(){}
-
-    //private Long idgenerador = Long.valueOf(0);
+    public UserService() {
+        //Empty constructor
+    }
 
     @Transactional
     public ArrayList<User> getUsers(){
@@ -42,8 +42,6 @@ public class UserService {
         if(this.isValidUser(usuario)){
             User user = new User(usuario.getName(), usuario.getSurname(), usuario.getEmail(), usuario.getAddress(),
                                  usuario.getPassword(), usuario.getCvu(), usuario.getWallet());
-            //user.setId(this.idgenerador+1);
-           // idgenerador++;
             return this.userRepository.save(user);
         }
         throw new UserError("One or more fields are incorrect");
