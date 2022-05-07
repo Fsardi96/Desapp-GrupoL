@@ -14,3 +14,13 @@ public class BackendDesappApiApplication {
 	}
 
 }
+
+
+//TODO
+// validación user para no crear user's con wallet repetida (DONE)
+// Poder eliminar un usuario (para eso eliminar sus transacciones) (DONE)
+// Desacoplar lógica de Crypto de User
+// Persistir en Hibernate
+// Consola H2
+// Swagger
+// Heroku

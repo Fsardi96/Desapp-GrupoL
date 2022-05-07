@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    private UserRepository userRepository1;
 
     public UserService() {
         //Empty constructor
@@ -48,7 +49,7 @@ public class UserService {
     }
 
     public boolean isValidUser(User user) {
-        return validate(user.getName(), "^[a-zA-Z]{3,30}$") &&
+        return !userRepository.existWallet(user.getWallet()) && validate(user.getName(), "^[a-zA-Z]{3,30}$") &&
                 validate(user.getSurname(), "^[a-zA-Z]{3,30}$") &&
                 validate(user.getEmail(), "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9.]+(?:\\.[a-zA-Z0-9-]+)*$") &&
                 validate(user.getAddress(), "^[a-zA-Z0-9]{10,30}$") &&  //corregir que admita espacios

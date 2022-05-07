@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.service.TransactionService;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import java.util.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private TransactionService transactionService;
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/users")
@@ -64,7 +67,12 @@ public class UserController {
 
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable Long id){
-        this.userService.deleteUser(id);
+        List<Transaction> transactionsByID = this.transactionService.getTransactionsByUserId(id);
+        if(transactionsByID.size() > 0) {
+            transactionsByID.forEach(transaction -> this.transactionService.deleteTransaction(transaction.getId()));
+        }else{
+            this.userService.deleteUser(id);
+        }
     }
 }
 

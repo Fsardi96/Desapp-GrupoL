@@ -55,4 +55,8 @@ public class TransactionService {
         });
         return transactionDTOS;
     }
+
+    public void deleteTransaction(Long id) {
+        this.transactionRepository.deleteById(id);
+    }
 }

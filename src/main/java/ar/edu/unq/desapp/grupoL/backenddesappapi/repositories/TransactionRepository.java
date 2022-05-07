@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 @Repository
-public interface TransactionRepository  extends CrudRepository<Transaction,Long> {
+public interface  TransactionRepository  extends CrudRepository<Transaction,Long> {
 
     List<Transaction> findAll();
 
