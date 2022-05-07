@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private TransactionService transactionService;
-    private RestTemplate restTemplate = new RestTemplate();
+
 
     @GetMapping("/users")
     public ArrayList<User> getUsers(){
@@ -35,30 +35,7 @@ public class UserController {
         return ResponseEntity.ok().body(userFound);
     }
 
-    @GetMapping("/getCrypoValue/{symbol}")
-    public ResponseEntity<CryptoCurrency> getCryptoCurrencyValue(@PathVariable String symbol){
-        CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + symbol, CryptoCurrency.class);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        if (entity != null) {
-            entity.setLastUpdateDateAndTime(formatter.format(date));
-        }
-        return ResponseEntity.ok().body(entity);
-    }
 
-    @GetMapping("/getCrypoValue/all")
-    public ResponseEntity<CryptoCurrencyList> getAllCryptoCurrencyPrices() {
-        CryptoCurrencyList list = new CryptoCurrencyList();
-        for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
-            CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
-            if (entity != null) {
-                entity.setLastUpdateDateAndTime(CurrentDateTime.getNewDateString());
-            }
-            list.addCrypto(entity);
-
-        }
-        return ResponseEntity.ok().body(list);
-    }
 
     @PostMapping(path="/addUser" , consumes = "application/json", produces = "application/json")
     public User createUser(@RequestBody User user) throws UserError{
@@ -68,7 +45,7 @@ public class UserController {
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable Long id){
         List<Transaction> transactionsByID = this.transactionService.getTransactionsByUserId(id);
-        if(transactionsByID.size() > 0) {
+        if(!transactionsByID.isEmpty()) {
             transactionsByID.forEach(transaction -> this.transactionService.deleteTransaction(transaction.getId()));
         }else{
             this.userService.deleteUser(id);
