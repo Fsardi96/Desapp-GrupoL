@@ -20,7 +20,7 @@ public class BackendDesappApiApplication {
 // validación user para no crear user's con wallet repetida (DONE)
 // Poder eliminar un usuario (para eso eliminar sus transacciones) (DONE)
 // Desacoplar lógica de Crypto de User (DONE)
-// Consola H2
+// Consola H2 (DONE)
 // Persistir en Hibernate
 // Swagger
 // Fechas en formato fecha y no String

@@ -3,9 +3,8 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+
 public class TransactionDTO {
- @Id
  private Long id;
  private String dateAndTime;
  private String crypto;

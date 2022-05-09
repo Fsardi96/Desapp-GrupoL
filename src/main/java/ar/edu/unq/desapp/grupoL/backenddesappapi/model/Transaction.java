@@ -2,6 +2,10 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.TransactionJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +13,10 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonSerialize(using = TransactionJsonSerializer.class)
 @Table
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Transaction {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -24,7 +32,6 @@ public class Transaction {
     private User user;
     private String transactionType;
 
-    public Transaction() { }
 
     public Transaction(String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, User user, String transactionType) {
         this.dateAndTime = dateAndTime;

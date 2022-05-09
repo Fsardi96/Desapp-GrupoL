@@ -2,6 +2,10 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.UserJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +14,10 @@ import java.util.ArrayList;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonSerialize(using = UserJsonSerializer.class)
 @Table
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
     @Column
@@ -26,7 +34,7 @@ public class User {
     private String score;
     private Integer operationsNumber;
 
-    public User() { }
+
 
     public User(String name, String surname, String email, String address, String password, String cvu, String wallet) {
         this.name = name;

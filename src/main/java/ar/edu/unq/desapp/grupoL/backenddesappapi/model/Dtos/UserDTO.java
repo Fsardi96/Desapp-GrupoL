@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
-@Entity
 public class UserDTO {
-    @Id
     @JsonProperty
     private Long id;
     @JsonProperty
