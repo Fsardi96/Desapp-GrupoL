@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
@@ -32,7 +33,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction createTransaction(Transaction transaction,User user) {
+    public Transaction createTransaction(TransactionCreateDTO transaction, User user) {
 
         Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCrypto(),
                                                     user,transaction.getTransactionType());

@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
@@ -46,7 +47,7 @@ public class TransactionController {
     public TransactionDTO createTransaction(@Parameter(description = "The user ID")
                                                 @PathVariable Long userID,
                                             @Parameter(description = "The transaction to be registered")
-                                            @RequestBody Transaction transaction) {
+                                            @RequestBody TransactionCreateDTO transaction) {
         User user = this.userService.findUser(userID);
         String username = user.getName() + " " + user.getSurname();
         Transaction savedTransaction = transactionService.createTransaction(transaction,user);

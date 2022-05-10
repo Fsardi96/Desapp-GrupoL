@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.TransactionService;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
@@ -42,7 +43,7 @@ public class UserController {
     @Operation(summary = "Register user")
     @PostMapping(path="/addUser" , consumes = "application/json", produces = "application/json")
     public User createUser(@Parameter(description = "The user to be registered", required = true)
-                               @RequestBody User user) throws UserError{
+                               @RequestBody UserCreateDTO user) throws UserError{
         return this.userService.createUser(user);
     }
 

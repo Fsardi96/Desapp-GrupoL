@@ -21,7 +21,8 @@ public class BackendDesappApiApplication {
 // Poder eliminar un usuario (para eso eliminar sus transacciones) (DONE)
 // Desacoplar lógica de Crypto de User (DONE)
 // Consola H2 (DONE)
+// Crear nuevo error por User repetido (DONE)
 // Persistir en Hibernate
-// Swagger
+// Swagger (DONE)
 // Fechas en formato fecha y no String
 // Heroku

@@ -20,7 +20,4 @@ public interface UserRepository extends CrudRepository<User,Long>{
 
 
 
-   // SELECT CAST(COUNT(1) AS BIT) FROM USER u WHERE u.wallet = :wallet
-
-
 }

@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserAlreadyExists;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
@@ -39,7 +41,10 @@ public class UserService {
 
 
     @Transactional
-    public User createUser(User usuario) throws UserError {
+    public User createUser(UserCreateDTO usuario) {
+        if(userAlreadyExists(usuario)){
+            throw new UserAlreadyExists();
+        }
         if(this.isValidUser(usuario)){
             User user = new User(usuario.getName(), usuario.getSurname(), usuario.getEmail(), usuario.getAddress(),
                                  usuario.getPassword(), usuario.getCvu(), usuario.getWallet());
@@ -48,15 +53,21 @@ public class UserService {
         throw new UserError("One or more fields are incorrect");
     }
 
-    public boolean isValidUser(User user) {
-        return !userRepository.existWallet(user.getWallet()) && validate(user.getName(), "^[a-zA-Z]{3,30}$") &&
-                validate(user.getSurname(), "^[a-zA-Z]{3,30}$") &&
+    public boolean isValidUser(UserCreateDTO user) {
+        return  validate(user.getName(), "^[a-zA-Z]{3,30}$") &&
+                validate(user.getSurname(), "^[a-zA-Z ]{3,30}$") &&
                 validate(user.getEmail(), "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9.]+(?:\\.[a-zA-Z0-9-]+)*$") &&
-                validate(user.getAddress(), "^[a-zA-Z0-9]{10,30}$") &&  //corregir que admita espacios
+                validate(user.getAddress(), "^[a-zA-Z0-9 ]{10,30}$") &&
                 validate(user.getPassword(), "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.])(?=\\S+$).{6,}$") &&
                 validate(user.getCvu(), "^[a-zA-Z0-9]{22}$") &&
                 validate(user.getWallet(), "^[a-zA-Z0-9]{8}$");
     }
+
+    public boolean userAlreadyExists(UserCreateDTO user){
+       return userRepository.existWallet(user.getWallet());
+    }
+
+
 
     public boolean validate(String string, String regex) {
         Pattern pattern = Pattern.compile(regex);
@@ -66,6 +77,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id){
-        this.userRepository.deleteById(id);
+        User user = this.findUser(id);
+        this.userRepository.deleteById(user.getId());
     }
 }
