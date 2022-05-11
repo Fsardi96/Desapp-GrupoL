@@ -12,7 +12,9 @@ public class UserCreateDTO {
     private String cvu;
     private String wallet;
 
-    public UserCreateDTO(){};
+    public UserCreateDTO() {
+        //Empty constructor
+    };
 
     public UserCreateDTO(String name, String surname, String email, String address, String password, String cvu, String wallet) {
         this.name = name;

@@ -1,11 +1,9 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.repositories;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 
 @Configuration
 @Repository

@@ -1,10 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Entity;
 import javax.persistence.Id;
-
 
 public class UserDTO {
     @JsonProperty

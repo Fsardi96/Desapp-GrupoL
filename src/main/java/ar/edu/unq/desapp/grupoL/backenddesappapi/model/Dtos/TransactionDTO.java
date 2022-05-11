@@ -1,8 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-
 
 public class TransactionDTO {
  private Long id;
@@ -15,8 +13,6 @@ public class TransactionDTO {
  private String userFullName;
  private Integer operationsNumber;
  private String score;
-
-
 
  public TransactionDTO(Long id, String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName, Integer operationsNumber, String score) {
   this.id = id;
@@ -31,7 +27,9 @@ public class TransactionDTO {
   this.score = score;
  }
 
- public TransactionDTO() { }
+ public TransactionDTO() {
+  //Empty constructor
+ }
 
  @Id
  public Long getId() {

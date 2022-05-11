@@ -21,9 +21,9 @@ class UserDTOTest {
         dto.setName("name");
         dto.setSurname("surname");
 
-        Assertions.assertEquals(dto.getId(), 1L);
-        Assertions.assertEquals(dto.getName(), "name");
-        Assertions.assertEquals(dto.getSurname(), "surname");
+        Assertions.assertEquals(1L, dto.getId());
+        Assertions.assertEquals( "name", dto.getName());
+        Assertions.assertEquals("surname", dto.getSurname());
     }
 
 }
