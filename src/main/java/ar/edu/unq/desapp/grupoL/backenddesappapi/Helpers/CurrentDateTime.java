@@ -7,7 +7,7 @@ public class CurrentDateTime {
 
     private CurrentDateTime() {
         //Empty Constructor
-    };
+    }
 
     public static Date getNewDate(){
         return new Date();

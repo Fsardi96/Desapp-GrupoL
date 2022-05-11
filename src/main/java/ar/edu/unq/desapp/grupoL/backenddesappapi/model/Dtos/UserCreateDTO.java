@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class UserCreateDTO {
 
     private String name;
@@ -14,7 +12,7 @@ public class UserCreateDTO {
 
     public UserCreateDTO() {
         //Empty constructor
-    };
+    }
 
     public UserCreateDTO(String name, String surname, String email, String address, String password, String cvu, String wallet) {
         this.name = name;

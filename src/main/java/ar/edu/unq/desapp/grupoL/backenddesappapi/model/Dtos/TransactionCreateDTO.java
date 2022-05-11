@@ -8,7 +8,9 @@ public class TransactionCreateDTO {
     private Float priceOfCrypto;
     private String transactionType;
 
-    public TransactionCreateDTO(){};
+    public TransactionCreateDTO() {
+        //Empty constructor
+    }
 
     public TransactionCreateDTO(String crypto, Float amountOfCrypto, Float priceOfCrypto, String transactionType) {
         this.crypto = crypto;
