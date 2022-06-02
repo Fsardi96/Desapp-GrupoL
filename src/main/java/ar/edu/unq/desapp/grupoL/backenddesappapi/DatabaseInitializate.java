@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
-@SpringBootApplication
-public class DatabaseInitializate implements CommandLineRunner {
+import javax.annotation.PostConstruct;
+
+
+@Component
+public class DatabaseInitializate  {
 
     @Autowired
     private TransactionService transactionService;
@@ -21,8 +25,8 @@ public class DatabaseInitializate implements CommandLineRunner {
 
 
 
-    @Override
-    public void run(String... arg0) throws Exception {
+    @PostConstruct
+    public void initializer() throws Exception {
         System.out.println("Inicializando Clases");
 
         /*-------------------------------*User*---------------------------------------------------------------- */
@@ -36,9 +40,13 @@ public class DatabaseInitializate implements CommandLineRunner {
 
         /*-------------------------------*Transaction*---------------------------------------------------------- */
         TransactionCreateDTO transaction1 = new TransactionCreateDTO("ALICEUSDT",10f,1000f,"COMPRA");
+        TransactionCreateDTO transaction2 = new TransactionCreateDTO("MATICUSDT",10f,1000f,"VENTA");
+        TransactionCreateDTO transaction3 = new TransactionCreateDTO("AXSUSDT",10f,1000f,"COMPRA");
 
-       // transactionService.createTransaction(transaction1,user);
 
+        transactionService.createTransaction(transaction1,user1.getId());
+        transactionService.createTransaction(transaction2,user2.getId());
+        transactionService.createTransaction(transaction3,user3.getId());
 
         System.out.println("Fin de Inicialización");
     }

@@ -47,13 +47,16 @@ public class TransactionController {
                                                 @PathVariable Long userID,
                                             @Parameter(description = "The transaction to be registered")
                                             @RequestBody TransactionCreateDTO transaction) {
-        User user = this.userService.findUser(userID);
-        String username = user.getName() + " " + user.getSurname();
-        Transaction savedTransaction = transactionService.createTransaction(transaction,user);
+
+        Transaction savedTransaction = transactionService.createTransaction(transaction,userID);
+
+        String username = savedTransaction.getUser().getName() + " " + savedTransaction.getUser().getSurname();
+        Integer operationNumber = savedTransaction.getUser().getOperationsNumber();
+        String score = savedTransaction.getUser().getScore();
 
         return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(), savedTransaction.getCrypto(), savedTransaction.getAmountOfCrypto(),
                 savedTransaction.getPriceOfCrypto(), savedTransaction.getPriceInARS(), savedTransaction.getTransactionType(),
-                username, user.getOperationsNumber(), user.getScore());
+                username, operationNumber, score);
     }
 
 }

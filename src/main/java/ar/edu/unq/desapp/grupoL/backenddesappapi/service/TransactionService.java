@@ -17,6 +17,10 @@ public class TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
+    @Autowired
+    UserService userService;
+
+
     public TransactionService() {
         //Empty constructor
     }
@@ -31,8 +35,9 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction createTransaction(TransactionCreateDTO transaction, User user) {
+    public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) {
 
+        User user = userService.findUser(userID);
         Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCrypto(),
                                                     user,transaction.getTransactionType());
         return this.transactionRepository.save(newTransaction);
