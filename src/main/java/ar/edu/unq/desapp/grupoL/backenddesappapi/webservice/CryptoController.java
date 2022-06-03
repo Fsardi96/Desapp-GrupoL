@@ -32,16 +32,10 @@ public class CryptoController {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Operation(summary = "Get a cryptocurrency price")
-    @GetMapping("/getCrypoValue/{symbol}")
+    @GetMapping("/getCrypoValue/{cryptoSymbol}")
     public ResponseEntity<CryptoCurrency> getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
-                                                                     @PathVariable String symbol){
-        CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + symbol, CryptoCurrency.class);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        if (entity != null) {
-            entity.setLastUpdateDateAndTime(formatter.format(date));
-        }
-        return ResponseEntity.ok().body(entity);
+                                                                     @PathVariable String cryptoSymbol){
+        return ResponseEntity.ok().body(cryptoService.findCrypto(cryptoSymbol));
     }
 
     @Operation(summary = "Get all cryptocurrency prices")

@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
@@ -20,6 +21,8 @@ public class TransactionService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CryptoService cryptoService;
 
     public TransactionService() {
         //Empty constructor
@@ -37,8 +40,10 @@ public class TransactionService {
     @Transactional
     public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) {
 
+        CryptoCurrency crypto = cryptoService.findCrypto(transaction.getCryptoSymbol());
+        crypto.setAmount(transaction.getAmountOfCrypto());
         User user = userService.findUser(userID);
-        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),transaction.getPriceOfCrypto(),
+        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), crypto,
                                                     user,transaction.getTransactionType());
         return this.transactionRepository.save(newTransaction);
     }
@@ -52,7 +57,7 @@ public class TransactionService {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
         retrievedTransactions.stream().forEach((transaction) -> {
-            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
+            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
                     transaction.getPriceOfCrypto(), transaction.getPriceInARS(), transaction.getTransactionType(),
                     transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
                     transaction.getUser().getScore()));

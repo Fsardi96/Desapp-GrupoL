@@ -42,8 +42,6 @@ public class DatabaseInitializate  {
         TransactionCreateDTO transaction1 = new TransactionCreateDTO("ALICEUSDT",10f,1000f,"COMPRA");
         TransactionCreateDTO transaction2 = new TransactionCreateDTO("MATICUSDT",10f,1000f,"VENTA");
         TransactionCreateDTO transaction3 = new TransactionCreateDTO("AXSUSDT",10f,1000f,"COMPRA");
-
-
         transactionService.createTransaction(transaction1,user1.getId());
         transactionService.createTransaction(transaction2,user2.getId());
         transactionService.createTransaction(transaction3,user3.getId());

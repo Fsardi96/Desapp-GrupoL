@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
@@ -43,20 +44,20 @@ public class TransactionController {
 
     @Operation(summary = "Create user transaction")
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
-    public TransactionDTO createTransaction(@Parameter(description = "The user ID")
-                                                @PathVariable Long userID,
+    public TransactionDTO createTransaction(@Parameter(description = "The user ID") @PathVariable Long userID,
                                             @Parameter(description = "The transaction to be registered")
                                             @RequestBody TransactionCreateDTO transaction) {
-
-        Transaction savedTransaction = transactionService.createTransaction(transaction,userID);
+        Transaction savedTransaction = transactionService.createTransaction(transaction, userID);
 
         String username = savedTransaction.getUser().getName() + " " + savedTransaction.getUser().getSurname();
         Integer operationNumber = savedTransaction.getUser().getOperationsNumber();
         String score = savedTransaction.getUser().getScore();
+        CryptoCurrency crypto = savedTransaction.getCrypto();
 
-        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(), savedTransaction.getCrypto(), savedTransaction.getAmountOfCrypto(),
-                savedTransaction.getPriceOfCrypto(), savedTransaction.getPriceInARS(), savedTransaction.getTransactionType(),
-                username, operationNumber, score);
+        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(),
+                                    crypto.getSymbol(), crypto.getAmount(),
+                                    crypto.getPrice(), crypto.getPriceInARS(),
+                                    savedTransaction.getTransactionType(), username, operationNumber, score);
     }
 
 }

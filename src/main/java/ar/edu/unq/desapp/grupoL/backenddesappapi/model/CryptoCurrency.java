@@ -14,13 +14,15 @@ public class CryptoCurrency {
     @Id
     private String symbol;
     private Float price;
+    private Float priceInARS;
+    private Float amount;
     private String lastUpdateDateAndTime;
 
-
-
-    public CryptoCurrency(String symbol, Float price, String lastUpdateDateAndTime) {
+    public CryptoCurrency(String symbol, Float price, Float priceInARS, Float amount, String lastUpdateDateAndTime) {
         this.symbol = symbol;
         this.price = price;
+        this.priceInARS = priceInARS;
+        this.amount = amount;
         this.lastUpdateDateAndTime = lastUpdateDateAndTime;
     }
 
