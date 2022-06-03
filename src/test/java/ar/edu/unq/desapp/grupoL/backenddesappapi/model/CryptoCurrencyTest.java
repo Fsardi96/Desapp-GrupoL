@@ -7,7 +7,7 @@ class CryptoCurrencyTest {
 
     @Test
     void testCryptoCurrencyModel() {
-        CryptoCurrency crypto = new CryptoCurrency("symbol", 10f, "date");
+        CryptoCurrency crypto = new CryptoCurrency("symbol", 10f,30f, 2F, "date");
 
         Assertions.assertEquals("symbol", crypto.getSymbol());
         Assertions.assertEquals(10f, crypto.getPrice());

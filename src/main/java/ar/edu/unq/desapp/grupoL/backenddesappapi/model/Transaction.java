@@ -33,7 +33,7 @@ public class Transaction {
     private User user;
     private String transactionType;
 
-    public Transaction(String dateAndTime, CryptoCurrency crypto, User user, String transactionType) {
+    public Transaction(String dateAndTime, CryptoCurrency crypto, float v, float v1, User user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.user = user;

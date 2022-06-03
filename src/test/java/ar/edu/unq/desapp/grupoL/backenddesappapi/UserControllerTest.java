@@ -19,7 +19,7 @@ class UserControllerTest {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        crypto = new CryptoCurrency("BTCUSDT", 10f, "today");
+        crypto = new CryptoCurrency("BTCUSDT", 10f,30f,2f, "today");
     }
 
     @Test
