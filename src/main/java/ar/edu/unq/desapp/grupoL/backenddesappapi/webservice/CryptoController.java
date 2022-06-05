@@ -65,7 +65,7 @@ public class CryptoController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/api/usd_price")
+    /*@GetMapping("/api/usd_price")
     public ResponseEntity<String> getUSDPrice() throws IOException {
         URL url = new URL("https://api.estadisticasbcra.com/usd_of");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -76,7 +76,7 @@ public class CryptoController {
         JSONObject json = new JSONObject();
         json.put("usd_prices", array.get(array.length() -1));
         return ResponseEntity.ok().body(json.toString());
-    }
+    }*/
 
 
 }

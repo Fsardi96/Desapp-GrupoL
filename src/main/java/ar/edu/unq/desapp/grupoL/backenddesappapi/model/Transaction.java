@@ -27,7 +27,7 @@ public class Transaction {
     private CryptoCurrency crypto;
     private Float amountOfCrypto;
     private Float priceOfCrypto;
-    private Float priceInARS;
+    private Float finalPriceInARS;
     @JoinColumn(name="User")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
@@ -40,7 +40,7 @@ public class Transaction {
         this.transactionType = transactionType;
         this.amountOfCrypto = crypto.getAmount();
         this.priceOfCrypto = crypto.getPrice();
-        this.priceInARS = crypto.getPriceInARS();
+        this.finalPriceInARS = crypto.getPriceInARS() * this.amountOfCrypto;
     }
 
 
@@ -78,12 +78,12 @@ public class Transaction {
         this.amountOfCrypto = amountOfCrypto;
     }
 
-    public Float getPriceInARS() {
-        return priceInARS;
+    public Float getFinalPriceInARS() {
+        return finalPriceInARS;
     }
 
-    public void setPriceInARS(Float priceInARS) {
-        this.priceInARS = priceInARS;
+    public void setFinalPriceInARS(Float priceInARS) {
+        this.finalPriceInARS = priceInARS;
     }
 
     public User getUser() {

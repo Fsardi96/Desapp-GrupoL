@@ -30,13 +30,13 @@ class TransactionTest {
         transaction.setPriceOfCrypto(10f);
         transaction.setUser(user);
         transaction.setTransactionType("transactionType");
-        transaction.setPriceInARS(10f);
+        transaction.setFinalPriceInARS(10f);
 
         Assertions.assertEquals("dateAndTime", transaction.getDateAndTime());
         Assertions.assertEquals(10f, transaction.getAmountOfCrypto());
         Assertions.assertEquals(10f, transaction.getPriceOfCrypto());
         Assertions.assertEquals(transaction.getUser(), user);
         Assertions.assertEquals("transactionType", transaction.getTransactionType());
-        Assertions.assertEquals(10f, transaction.getPriceInARS());
+        Assertions.assertEquals(10f, transaction.getFinalPriceInARS());
     }
 }

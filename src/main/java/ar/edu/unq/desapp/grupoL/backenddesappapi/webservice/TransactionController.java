@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Api(tags = "Transaction services")
@@ -46,7 +47,7 @@ public class TransactionController {
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
     public TransactionDTO createTransaction(@Parameter(description = "The user ID") @PathVariable Long userID,
                                             @Parameter(description = "The transaction to be registered")
-                                            @RequestBody TransactionCreateDTO transaction) {
+                                            @RequestBody TransactionCreateDTO transaction) throws IOException {
         Transaction savedTransaction = transactionService.createTransaction(transaction, userID);
 
         String username = savedTransaction.getUser().getName() + " " + savedTransaction.getUser().getSurname();

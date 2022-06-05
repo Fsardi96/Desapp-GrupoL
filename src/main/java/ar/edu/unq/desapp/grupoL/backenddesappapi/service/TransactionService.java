@@ -10,6 +10,9 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.TransactionReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +41,11 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) {
+    public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) throws IOException {
 
         CryptoCurrency crypto = cryptoService.findCrypto(transaction.getCryptoSymbol());
+        float finalDolarInARS = cryptoService.getUSDPrice() * crypto.getPrice();
+        crypto.setPriceInARS(finalDolarInARS );
         crypto.setAmount(transaction.getAmountOfCrypto());
         User user = userService.findUser(userID);
         Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), crypto,
@@ -58,7 +63,7 @@ public class TransactionService {
 
         retrievedTransactions.stream().forEach((transaction) -> {
             transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
-                    transaction.getPriceOfCrypto(), transaction.getPriceInARS(), transaction.getTransactionType(),
+                    transaction.getPriceOfCrypto(), transaction.getFinalPriceInARS(), transaction.getTransactionType(),
                     transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
                     transaction.getUser().getScore()));
         });
