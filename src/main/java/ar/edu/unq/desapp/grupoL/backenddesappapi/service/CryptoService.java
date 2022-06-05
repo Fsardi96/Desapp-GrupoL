@@ -23,7 +23,7 @@ public class CryptoService {
 
     @Transactional
     public CryptoCurrency findCrypto(String cryptoSymbol) {
-        CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + "BNBUSDT", CryptoCurrency.class);
+        CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + cryptoSymbol, CryptoCurrency.class);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         if (entity != null) {

@@ -44,7 +44,7 @@ public class TransactionService {
         crypto.setAmount(transaction.getAmountOfCrypto());
         User user = userService.findUser(userID);
         Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), crypto,
-                10f, 10f, user,transaction.getTransactionType());
+                user,transaction.getTransactionType());
         return this.transactionRepository.save(newTransaction);
     }
 

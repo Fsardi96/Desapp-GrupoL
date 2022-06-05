@@ -55,7 +55,7 @@ public class TransactionController {
         CryptoCurrency crypto = savedTransaction.getCrypto();
 
         return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(),
-                                    crypto.getSymbol(), crypto.getAmount(),
+                crypto.getSymbol(), crypto.getAmount(),
                                     crypto.getPrice(), crypto.getPriceInARS(),
                                     savedTransaction.getTransactionType(), username, operationNumber, score);
     }

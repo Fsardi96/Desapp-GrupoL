@@ -1,17 +1,21 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
-import lombok.Builder;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Builder
 public class CryptoCurrency {
+
+
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column
+    private Long id;
     private String symbol;
     private Float price;
     private Float priceInARS;
@@ -25,6 +29,8 @@ public class CryptoCurrency {
         this.amount = amount;
         this.lastUpdateDateAndTime = lastUpdateDateAndTime;
     }
+
+
 
     public String getSymbol() {
         return symbol;
@@ -48,5 +54,29 @@ public class CryptoCurrency {
 
     public void setLastUpdateDateAndTime(String lastUpdateDateAndTime) {
         this.lastUpdateDateAndTime = lastUpdateDateAndTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Float getPriceInARS() {
+        return priceInARS;
+    }
+
+    public void setPriceInARS(Float priceInARS) {
+        this.priceInARS = priceInARS;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
     }
 }

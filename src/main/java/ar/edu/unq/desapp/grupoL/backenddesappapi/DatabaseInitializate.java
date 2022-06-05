@@ -39,12 +39,12 @@ public class DatabaseInitializate  {
         User user3 = userService.createUser(userDto3);
 
         /*-------------------------------*Transaction*---------------------------------------------------------- */
-        /*TransactionCreateDTO transaction1 = new TransactionCreateDTO("ALICEUSDT",10f,"COMPRA");
+        TransactionCreateDTO transaction1 = new TransactionCreateDTO("ALICEUSDT",10f,"COMPRA");
         TransactionCreateDTO transaction2 = new TransactionCreateDTO("MATICUSDT",10f,"VENTA");
         TransactionCreateDTO transaction3 = new TransactionCreateDTO("AXSUSDT",10f,"COMPRA");
         transactionService.createTransaction(transaction1,user1.getId());
         transactionService.createTransaction(transaction2,user2.getId());
-        transactionService.createTransaction(transaction3,user3.getId());*/
+        transactionService.createTransaction(transaction3,user3.getId());
 
         System.out.println("Fin de Inicialización");
     }

@@ -13,7 +13,7 @@ class TransactionTest {
 
         CryptoCurrency crypto = new CryptoCurrency("symbol", 10f,30f, 2F, "date");
         Transaction transaction = new Transaction("dateAndTime", crypto,
-                                                    10f, 10f, user, "transactionType");
+                                                    user, "transactionType");
 
         Assertions.assertEquals("dateAndTime", transaction.getDateAndTime());
         Assertions.assertEquals(2f, transaction.getCrypto().getAmount());

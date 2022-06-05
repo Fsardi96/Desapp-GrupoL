@@ -33,12 +33,18 @@ public class Transaction {
     private User user;
     private String transactionType;
 
-    public Transaction(String dateAndTime, CryptoCurrency crypto, float v, float v1, User user, String transactionType) {
+    public Transaction(String dateAndTime, CryptoCurrency crypto, User user, String transactionType) {
         this.dateAndTime = dateAndTime;
         this.crypto = crypto;
         this.user = user;
         this.transactionType = transactionType;
+        this.amountOfCrypto = crypto.getAmount();
+        this.priceOfCrypto = crypto.getPrice();
+        this.priceInARS = crypto.getPriceInARS();
     }
+
+
+
 
     public Long getId() {
         return id;
