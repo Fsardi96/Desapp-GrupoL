@@ -67,6 +67,8 @@ public class TransactionController {
                                                      @Parameter(description = "The user ID") @PathVariable Long userID) {
         Transaction transaction = transactionService.findTransaction(transactionID);
         transactionService.processTransaction(transaction, userID);
+
+
         TransactionProcessedDTO dto = new TransactionProcessedDTO(transaction.getCrypto().getSymbol(),
                                                                     transaction.getAmountOfCrypto(),
                                                                     transaction.getPriceOfCrypto(),

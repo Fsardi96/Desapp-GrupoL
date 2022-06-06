@@ -34,7 +34,6 @@ public class CryptoService {
         if (entity != null) {
             entity.setLastUpdateDateAndTime(date);
         }
-        System.out.print(date);
         return entity;
     }
 

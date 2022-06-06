@@ -61,6 +61,11 @@ public class TransactionService {
         return this.transactionRepository.getTransactionsByUserId(id);
     }
 
+    @Transactional
+    public void updateTransaction(Transaction transaction) {
+        this.transactionRepository.save(transaction);
+    }
+
     public List<TransactionDTO> processTransactionsToDTO(List<Transaction> retrievedTransactions) {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
@@ -77,22 +82,31 @@ public class TransactionService {
         this.transactionRepository.deleteById(id);
     }
 
+
+
+
+
+
     public void processTransaction(Transaction transaction, Long secondaryUserID) {
-        transaction.process();
+        //TODO: verificar que no se esté operando con 2 usuarios iguales.
+        //TODO: if transaction == "En Curso" OK, ELSE{error}
         User secondaryUser = userService.findUser(secondaryUserID);
-        long difference = ChronoUnit.MINUTES.between(LocalDateTime.now(), transaction.getDateAndTime());
-        if(difference <= 30){
-            transaction.getUser().setScore(transaction.getUser().getScore() + 10);    //TODO: Score es un string, se debe parsear el score a int, sumarlo y volverlo a parsear a String.
-            secondaryUser.setScore(transaction.getUser().getScore() + 10);
-        }else {
-            transaction.getUser().setScore(transaction.getUser().getScore() + 5);
-            secondaryUser.setScore(transaction.getUser().getScore() + 5);
-        }
+        transaction.process(secondaryUser);
+
         userService.updateUser(transaction.getUser());
         userService.updateUser(secondaryUser);
 
+
         //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "PROCESADA" y hacerle un SAVE
+        this.updateTransaction(transaction);
     }
+
+
+
+
+
+
+
 
     public void cancelTransaction(Long transactionID) {
         Transaction transaction = this.findTransaction(transactionID);
@@ -100,6 +114,5 @@ public class TransactionService {
 
         //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "Cancelada" y hacerle un SAVE
 
-        // this.transactionRepository.deleteById(transactionID);
     }
 }

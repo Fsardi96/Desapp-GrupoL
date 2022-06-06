@@ -34,7 +34,7 @@ public class DatabaseInitializate  {
         /*-------------------------------*User*---------------------------------------------------------------- */
 
 
-        LocalDateTime fecha1 = LocalDateTime.now();
+     /*   LocalDateTime fecha1 = LocalDateTime.now();
         LocalDateTime fecha2 = LocalDateTime.now();
 
         fecha1 = fecha1.plusMinutes(30); //Le sumo 30 min a la fecha 1
@@ -42,7 +42,7 @@ public class DatabaseInitializate  {
         long minutes = ChronoUnit.MINUTES.between(fecha2, fecha1);
 
         System.out.println(minutes);
-
+*/
 
 
 

@@ -10,6 +10,7 @@ import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -35,7 +36,7 @@ public class Transaction {
     private User user;
     private String transactionType;
 
-    public Transaction( CryptoCurrency crypto, User user, String transactionType) {
+    public Transaction(CryptoCurrency crypto, User user, String transactionType) {
         this.dateAndTime = LocalDateTime.now();
         this.crypto = crypto;
         this.user = user;
@@ -109,10 +110,29 @@ public class Transaction {
         this.priceOfCrypto = priceOfCryto;
     }
 
-    public void process() {
+    public void process(User secondaryUser) {
         user.setOperationsNumber(user.getOperationsNumber() + 1);
+        secondaryUser.setOperationsNumber(secondaryUser.getOperationsNumber() + 1);
 
+        long difference = ChronoUnit.MINUTES.between(LocalDateTime.now(), this.getDateAndTime());
+        if(difference <= 30){
+            defineScore(this.getUser(),10);
+            defineScore(secondaryUser,10);
+        }else {
+            defineScore(this.getUser(),5);
+            defineScore(secondaryUser,5);
+        }
     }
+
+    public void defineScore(User user, int scoreToIncrement){
+        if(user.getScore().equals("Sin operaciones")){
+            user.setScore(String.valueOf(scoreToIncrement));
+        }else{
+            Integer newScore = Integer.parseInt(user.getScore()) + scoreToIncrement;
+            user.setScore(newScore.toString());
+        }
+    }
+
 
     public void cancel() {
         if (user.getScore().equals("Sin operaciones")) {
