@@ -32,8 +32,6 @@ public class User {
     private String score;
     private Integer operationsNumber;
 
-
-
     public User(String name, String surname, String email, String address, String password, String cvu, String wallet) {
         this.name = name;
         this.surname = surname;
@@ -115,7 +113,11 @@ public class User {
     }
 
     public void setScore(String score) {
-        this.score = score;
+        if (Integer.parseInt(score) < 0) {
+            this.score = "0";
+        } else {
+            this.score = score;
+        }
     }
 
     public Integer getOperationsNumber() {
@@ -124,6 +126,10 @@ public class User {
 
     public void setOperationsNumber(Integer operationsNumber) {
         this.operationsNumber = operationsNumber;
+    }
+
+    public String getFullName() {
+        return this.getName() + " " + this.getSurname();
     }
 }
 

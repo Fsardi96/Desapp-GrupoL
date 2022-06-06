@@ -37,7 +37,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction findTransaction(Long id){return  transactionRepository.findById(id).get();
+    public Transaction findTransaction(Long id){
+        return  transactionRepository.findById(id).get();
     }
 
     @Transactional
@@ -57,7 +58,6 @@ public class TransactionService {
         return this.transactionRepository.getTransactionsByUserId(id);
     }
 
-
     public List<TransactionDTO> processTransactionsToDTO(List<Transaction> retrievedTransactions) {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
@@ -72,5 +72,16 @@ public class TransactionService {
 
     public void deleteTransaction(Long id) {
         this.transactionRepository.deleteById(id);
+    }
+
+    public void processTransaction(Long transactionID, Long secondaryUserID) {
+        Transaction transaction = this.findTransaction(transactionID);
+        transaction.process();
+    }
+
+    public void cancelTransaction(Long transactionID) {
+        Transaction transaction = this.findTransaction(transactionID);
+        transaction.cancel();
+        // this.transactionRepository.deleteById(transactionID);
     }
 }

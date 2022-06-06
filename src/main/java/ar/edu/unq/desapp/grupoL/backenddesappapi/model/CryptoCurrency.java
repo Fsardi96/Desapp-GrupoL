@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -20,17 +21,15 @@ public class CryptoCurrency {
     private Float price;
     private Float priceInARS;
     private Float amount;
-    private String lastUpdateDateAndTime;
+    private LocalDateTime lastUpdateDateAndTime;
 
-    public CryptoCurrency(String symbol, Float price, Float priceInARS, Float amount, String lastUpdateDateAndTime) {
+    public CryptoCurrency(String symbol, Float price, Float priceInARS, Float amount, LocalDateTime lastUpdateDateAndTime) {
         this.symbol = symbol;
         this.price = price;
         this.priceInARS = priceInARS;
         this.amount = amount;
-        this.lastUpdateDateAndTime = lastUpdateDateAndTime;
+        this.lastUpdateDateAndTime = LocalDateTime.now();
     }
-
-
 
     public String getSymbol() {
         return symbol;
@@ -48,11 +47,11 @@ public class CryptoCurrency {
         this.price = price;
     }
 
-    public String getLastUpdateDateAndTime() {
+    public LocalDateTime getLastUpdateDateAndTime() {
         return lastUpdateDateAndTime;
     }
 
-    public void setLastUpdateDateAndTime(String lastUpdateDateAndTime) {
+    public void setLastUpdateDateAndTime(LocalDateTime lastUpdateDateAndTime) {
         this.lastUpdateDateAndTime = lastUpdateDateAndTime;
     }
 

@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -29,11 +30,11 @@ public class CryptoService {
     @Transactional
     public CryptoCurrency findCrypto(String cryptoSymbol) {
         CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + cryptoSymbol, CryptoCurrency.class);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
         if (entity != null) {
-            entity.setLastUpdateDateAndTime(formatter.format(date));
+            entity.setLastUpdateDateAndTime(date);
         }
+        System.out.print(date);
         return entity;
     }
 
@@ -42,7 +43,8 @@ public class CryptoService {
         URL url = new URL("https://api.estadisticasbcra.com/usd_of");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
         http.setRequestProperty("Accept", "application/json");
-        http.setRequestProperty("Authorization", "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE4Njc5NzUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJmYWN1c2FyZGk5NkBnbWFpbC5jb20ifQ.HC2l0NbZ6vdZLEEOUkkZnSy7Ce8x3nbvg2m7nLzdmERmTyKphnVK1v8SE7g-VzYohHc97hyDXwkQViq6w0gasg");
+        http.setRequestProperty("Authorization", "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODYwMTU4MjUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJhaWxpbnNwNTBAZ21haWwuY29tIn0.ZWeaojfLJy2rJU768pgv7_67Tap4CGwnwLpg7cE_8Q5evl3gm7DAf8RHFijPDCzQUixHA2RT_KI2qKEUZW5QqA");
+        // http.setRequestProperty("Authorization", "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE4Njc5NzUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJmYWN1c2FyZGk5NkBnbWFpbC5jb20ifQ.HC2l0NbZ6vdZLEEOUkkZnSy7Ce8x3nbvg2m7nLzdmERmTyKphnVK1v8SE7g-VzYohHc97hyDXwkQViq6w0gasg");
         String response = CryptoService.getResponseBody(http);
         JSONArray array = new JSONArray(response);
         JSONObject json = new JSONObject();

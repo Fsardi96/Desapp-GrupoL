@@ -43,9 +43,6 @@ public class Transaction {
         this.finalPriceInARS = crypto.getPriceInARS() * this.amountOfCrypto;
     }
 
-
-
-
     public Long getId() {
         return id;
     }
@@ -108,5 +105,27 @@ public class Transaction {
 
     public void setPriceOfCrypto(Float priceOfCryto) {
         this.priceOfCrypto = priceOfCryto;
+    }
+
+    public void process() {
+        user.setOperationsNumber(user.getOperationsNumber() + 1);
+
+    }
+
+    public void cancel() {
+        if (user.getScore().equals("Sin operaciones")) {
+            user.setScore("0");
+        } else {
+            Integer newScore = (Integer.parseInt(user.getScore()) - 20);
+            user.setScore(newScore.toString());
+        }
+    }
+
+    public String getAddress() {
+        if (transactionType.equals("COMPRA")) {
+            return user.getWallet();
+        } else {
+            return user.getCvu();
+        }
     }
 }

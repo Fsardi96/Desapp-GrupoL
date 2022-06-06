@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyEnum;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.CryptoDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.CryptoService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Api (tags = "CryptoCurrency services")
@@ -38,16 +40,12 @@ public class CryptoController {
     CryptoService cryptoService;
     private RestTemplate restTemplate = new RestTemplate();
 
-
-
-
-
-
     @Operation(summary = "Get a cryptocurrency price")
     @GetMapping("/getCrypoValue/{cryptoSymbol}")
-    public ResponseEntity<CryptoCurrency> getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
+    public CryptoDTO getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
                                                                      @PathVariable String cryptoSymbol){
-        return ResponseEntity.ok().body(cryptoService.findCrypto(cryptoSymbol));
+        CryptoCurrency crypto = cryptoService.findCrypto(cryptoSymbol);
+        return new CryptoDTO(crypto.getSymbol(), crypto.getPrice(), crypto.getLastUpdateDateAndTime().toString());
     }
 
     @Operation(summary = "Get all cryptocurrency prices")
@@ -56,27 +54,8 @@ public class CryptoController {
         CryptoCurrencyList list = new CryptoCurrencyList();
         for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
             CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
-            if (entity != null) {
-                entity.setLastUpdateDateAndTime(CurrentDateTime.getNewDateString());
-            }
             list.addCrypto(entity);
-
         }
         return ResponseEntity.ok().body(list);
     }
-
-    /*@GetMapping("/api/usd_price")
-    public ResponseEntity<String> getUSDPrice() throws IOException {
-        URL url = new URL("https://api.estadisticasbcra.com/usd_of");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        http.setRequestProperty("Accept", "application/json");
-        http.setRequestProperty("Authorization", "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE4Njc5NzUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJmYWN1c2FyZGk5NkBnbWFpbC5jb20ifQ.HC2l0NbZ6vdZLEEOUkkZnSy7Ce8x3nbvg2m7nLzdmERmTyKphnVK1v8SE7g-VzYohHc97hyDXwkQViq6w0gasg");
-        String response = CryptoService.getResponseBody(http);
-        JSONArray array = new JSONArray(response);
-        JSONObject json = new JSONObject();
-        json.put("usd_prices", array.get(array.length() -1));
-        return ResponseEntity.ok().body(json.toString());
-    }*/
-
-
 }
