@@ -70,6 +70,11 @@ public class UserService {
     }
 
     @Transactional
+    public void updateUser(User user) {
+        this.userRepository.save(user);
+    }
+
+    @Transactional
     public void deleteUser(Long id){
         User user = this.findUser(id);
         this.userRepository.deleteById(user.getId());

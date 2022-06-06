@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class TransactionJsonSerializer extends JsonSerializer<Transaction> {
 
@@ -14,7 +15,7 @@ public class TransactionJsonSerializer extends JsonSerializer<Transaction> {
         jgen.writeStartObject();
 
         jgen.writeNumberField("id", transaction.getId());
-        jgen.writeStringField("dateAndTime", transaction.getDateAndTime());
+        jgen.writeStringField("dateAndTime", transaction.getDateAndTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         jgen.writeObjectField("crypto", transaction.getCrypto());
         jgen.writeStringField("transactionType", transaction.getTransactionType());
         jgen.writeObjectField("user", transaction.getUser());

@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -22,7 +24,7 @@ public class Transaction {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column
     private Long id;
-    private String dateAndTime;
+    private LocalDateTime dateAndTime;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CryptoCurrency crypto;
     private Float amountOfCrypto;
@@ -33,8 +35,8 @@ public class Transaction {
     private User user;
     private String transactionType;
 
-    public Transaction(String dateAndTime, CryptoCurrency crypto, User user, String transactionType) {
-        this.dateAndTime = dateAndTime;
+    public Transaction( CryptoCurrency crypto, User user, String transactionType) {
+        this.dateAndTime = LocalDateTime.now();
         this.crypto = crypto;
         this.user = user;
         this.transactionType = transactionType;
@@ -51,11 +53,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(String dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 

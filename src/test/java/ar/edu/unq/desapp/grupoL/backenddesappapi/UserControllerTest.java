@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+
 class UserControllerTest {
 
     @Mock
@@ -19,7 +21,7 @@ class UserControllerTest {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        crypto = new CryptoCurrency("BTCUSDT", 10f,30f,2f, "today");
+        crypto = new CryptoCurrency("BTCUSDT", 10f,30f,2f, LocalDateTime.now());
     }
 
     @Test

@@ -3,10 +3,12 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 class TransactionDTOTest {
     @Test
     void testTransactionDTOModel() {
-        TransactionDTO dto = new TransactionDTO(2L, "dateAndTime", "crypto",10f,10f,
+        TransactionDTO dto = new TransactionDTO(2L, LocalDateTime.now().toString(), "crypto",10f,10f,
                 10f,"type","Pepe", 0, "SinOperaciones");
 
         Assertions.assertEquals(2L, dto.getId());

@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 @Component
@@ -31,6 +33,19 @@ public class DatabaseInitializate  {
 
         /*-------------------------------*User*---------------------------------------------------------------- */
 
+
+        LocalDateTime fecha1 = LocalDateTime.now();
+        LocalDateTime fecha2 = LocalDateTime.now();
+
+        fecha1 = fecha1.plusMinutes(30); //Le sumo 30 min a la fecha 1
+
+        long minutes = ChronoUnit.MINUTES.between(fecha2, fecha1);
+
+        System.out.println(minutes);
+
+
+
+
         UserCreateDTO userDto1 = new UserCreateDTO("Juan","Perez","Perez@dessap.com","Catamarca 134","Facundo1.","12345678912345678912aa","1234567a");
         UserCreateDTO userDto2 = new UserCreateDTO("Martin","Garcia","Garcia@dessap.com","SanLuis 134","Facundo2.","12345678912345678912ab","1234567b");
         UserCreateDTO userDto3 = new UserCreateDTO("Fernando","Rodriguez","Rodriguez@dessap.com","Larrea 134","Facundo3.","12345678912345678912ac","1234567c");
@@ -38,14 +53,13 @@ public class DatabaseInitializate  {
         User user2 = userService.createUser(userDto2);
         User user3 = userService.createUser(userDto3);
 
-        /*-------------------------------*Transaction*---------------------------------------------------------- */
+        //-------------------------------*Transaction*----------------------------------------------------------
         TransactionCreateDTO transaction1 = new TransactionCreateDTO("ALICEUSDT",10f,"COMPRA");
         TransactionCreateDTO transaction2 = new TransactionCreateDTO("MATICUSDT",10f,"VENTA");
         TransactionCreateDTO transaction3 = new TransactionCreateDTO("AXSUSDT",10f,"COMPRA");
         transactionService.createTransaction(transaction1,user1.getId());
         transactionService.createTransaction(transaction2,user2.getId());
         transactionService.createTransaction(transaction3,user3.getId());
-
         System.out.println("Fin de Inicialización");
     }
 }

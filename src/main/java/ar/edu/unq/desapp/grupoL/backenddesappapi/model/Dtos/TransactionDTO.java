@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 public class TransactionDTO {
  private Long id;

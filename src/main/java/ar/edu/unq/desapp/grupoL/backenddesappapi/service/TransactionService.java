@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class TransactionService {
         crypto.setPriceInARS(finalDolarInARS );
         crypto.setAmount(transaction.getAmountOfCrypto());
         User user = userService.findUser(userID);
-        Transaction newTransaction = new Transaction(CurrentDateTime.getNewDateString(), crypto,
+        Transaction newTransaction = new Transaction(crypto,
                 user,transaction.getTransactionType());
         return this.transactionRepository.save(newTransaction);
     }
@@ -62,7 +65,7 @@ public class TransactionService {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
         retrievedTransactions.stream().forEach((transaction) -> {
-            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
+            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime().toString(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
                     transaction.getPriceOfCrypto(), transaction.getFinalPriceInARS(), transaction.getTransactionType(),
                     transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
                     transaction.getUser().getScore()));
@@ -74,14 +77,29 @@ public class TransactionService {
         this.transactionRepository.deleteById(id);
     }
 
-    public void processTransaction(Long transactionID, Long secondaryUserID) {
-        Transaction transaction = this.findTransaction(transactionID);
+    public void processTransaction(Transaction transaction, Long secondaryUserID) {
         transaction.process();
+        User secondaryUser = userService.findUser(secondaryUserID);
+        long difference = ChronoUnit.MINUTES.between(LocalDateTime.now(), transaction.getDateAndTime());
+        if(difference <= 30){
+            transaction.getUser().setScore(transaction.getUser().getScore() + 10);    //TODO: Score es un string, se debe parsear el score a int, sumarlo y volverlo a parsear a String.
+            secondaryUser.setScore(transaction.getUser().getScore() + 10);
+        }else {
+            transaction.getUser().setScore(transaction.getUser().getScore() + 5);
+            secondaryUser.setScore(transaction.getUser().getScore() + 5);
+        }
+        userService.updateUser(transaction.getUser());
+        userService.updateUser(secondaryUser);
+
+        //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "PROCESADA" y hacerle un SAVE
     }
 
     public void cancelTransaction(Long transactionID) {
         Transaction transaction = this.findTransaction(transactionID);
         transaction.cancel();
+
+        //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "Cancelada" y hacerle un SAVE
+
         // this.transactionRepository.deleteById(transactionID);
     }
 }

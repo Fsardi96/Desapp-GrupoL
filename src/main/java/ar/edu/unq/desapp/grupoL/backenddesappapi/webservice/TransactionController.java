@@ -55,7 +55,7 @@ public class TransactionController {
         String score = savedTransaction.getUser().getScore();
         CryptoCurrency crypto = savedTransaction.getCrypto();
 
-        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime(),
+        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime().toString(),
                 crypto.getSymbol(), crypto.getAmount(),
                                     crypto.getPrice(), crypto.getPriceInARS(),
                                     savedTransaction.getTransactionType(), username, operationNumber, score);
@@ -66,7 +66,7 @@ public class TransactionController {
     public ResponseEntity<TransactionProcessedDTO> processTransaction(@Parameter(description = "The transaction ID") @PathVariable Long transactionID,
                                                      @Parameter(description = "The user ID") @PathVariable Long userID) {
         Transaction transaction = transactionService.findTransaction(transactionID);
-        transactionService.processTransaction(transactionID, userID);
+        transactionService.processTransaction(transaction, userID);
         TransactionProcessedDTO dto = new TransactionProcessedDTO(transaction.getCrypto().getSymbol(),
                                                                     transaction.getAmountOfCrypto(),
                                                                     transaction.getPriceOfCrypto(),
