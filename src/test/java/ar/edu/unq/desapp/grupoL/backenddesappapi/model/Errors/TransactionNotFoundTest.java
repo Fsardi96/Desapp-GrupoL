@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class TransactionNotFoundTest {
     @Test
     void testTransactionNotFoundModel () {
-        TransactionNotFound error = new TransactionNotFound("error");
-        Assertions.assertEquals("error", error.getMessage());
+        TransactionNotFound error = new TransactionNotFound();
+        Assertions.assertEquals("There is not a transaction with that ID", error.getMessage());
     }
 }
