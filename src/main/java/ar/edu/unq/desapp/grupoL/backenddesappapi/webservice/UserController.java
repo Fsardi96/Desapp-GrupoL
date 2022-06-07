@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.DatesDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.TransactionService;
@@ -58,6 +59,23 @@ public class UserController {
             this.userService.deleteUser(id);
         }
     }
+
+
+    @Operation(summary = "Get user transaction between dates")
+    @GetMapping("/tradedVolume/userID={id}")
+    public ResponseEntity<User> getTradedVolume(@Parameter(description = "The user ID that needs to be fetched", required = true)
+                                                @PathVariable Long id,
+                                                @RequestBody DatesDTO dates){
+
+        userService.getTradedVolume(dates,id);
+
+        return ResponseEntity.ok().body(userFound); //cambiar
+    }
+
+
+
+
+
 }
 
 

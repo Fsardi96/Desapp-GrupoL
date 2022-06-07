@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.DatesDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserAlreadyExists;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,5 +81,17 @@ public class UserService {
     public void deleteUser(Long id){
         User user = this.findUser(id);
         this.userRepository.deleteById(user.getId());
+    }
+
+    public void getTradedVolume(DatesDTO dates, Long id) {
+
+        User userFound = this.findUser(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime dateFrom = LocalDateTime.parse(dates.getDate1(), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(dates.getDate2(), formatter);
+
+
+
     }
 }
