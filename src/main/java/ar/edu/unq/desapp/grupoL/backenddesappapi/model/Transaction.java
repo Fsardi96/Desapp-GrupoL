@@ -36,6 +36,8 @@ public class Transaction {
     private User user;
     private String transactionType;
     private String status;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private User secondaryUser;
 
     public Transaction(CryptoCurrency crypto, User user, String transactionType) {
         this.dateAndTime = LocalDateTime.now();
@@ -46,6 +48,7 @@ public class Transaction {
         this.priceOfCrypto = crypto.getPrice();
         this.finalPriceInARS = crypto.getPriceInARS() * this.amountOfCrypto;
         this.status = "En curso";
+        this.secondaryUser = null;
     }
 
     public Long getId() {
@@ -118,6 +121,12 @@ public class Transaction {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public User getSecondaryUser() { return secondaryUser; }
+
+    public void setSecondaryUser(User secondaryUser) {
+        this.secondaryUser = secondaryUser;
     }
 
     public void process(User secondaryUser) {

@@ -1,10 +1,14 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.CryptoActiveDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.DatesDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserTradedVolumeDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserAlreadyExists;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserError;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserService {
@@ -35,7 +42,6 @@ public class UserService {
     public User findUser(Long id){
         return  userRepository.findById(id).orElseThrow(UserNotFound::new);
     }
-
 
     @Transactional
     public User createUser(UserCreateDTO usuario) {
@@ -64,8 +70,6 @@ public class UserService {
        return userRepository.existWallet(user.getWallet());
     }
 
-
-
     public boolean validate(String string, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(string);
@@ -83,15 +87,48 @@ public class UserService {
         this.userRepository.deleteById(user.getId());
     }
 
-    public void getTradedVolume(DatesDTO dates, Long id) {
+    public UserTradedVolumeDTO getTradedVolume(DatesDTO dates, Long id, List<Transaction> transactions) {
 
         User userFound = this.findUser(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
         LocalDateTime dateFrom = LocalDateTime.parse(dates.getDate1(), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(dates.getDate2(), formatter);
 
+        ArrayList<Transaction> processedTransactions = transactions.stream().filter(t -> t.getStatus().equals("Procesada") &&
+                                                                    (t.getUser().getId().equals(id) || t.getSecondaryUser().getId().equals(id)))
+                                                                    .collect(Collectors.toCollection(ArrayList::new));
 
+        Float volumeInUSD = this.volumeInUSD(processedTransactions);
+        Float volumeInARS = this.volumeInARS(processedTransactions);
+        ArrayList<CryptoActiveDTO> cryptoActives = this.getCryptoActivesFromTransactions(processedTransactions);
 
+        return new UserTradedVolumeDTO(userFound.getFullName(), LocalDateTime.now().toString(), volumeInUSD, volumeInARS, cryptoActives);
+    }
+
+    public float volumeInUSD(ArrayList<Transaction> transactions) {
+        float sum = 0;
+        for(int i = 0; i < transactions.size(); i++) {
+            sum = sum + transactions.get(i).getPriceOfCrypto();
+        }
+        return sum;
+    }
+
+    public float volumeInARS(ArrayList<Transaction> transactions) {
+        float sum = 0;
+        for(int i = 0; i < transactions.size(); i++) {
+            sum = sum + transactions.get(i).getFinalPriceInARS();
+        }
+        return sum;
+    }
+
+    public ArrayList<CryptoActiveDTO> getCryptoActivesFromTransactions(ArrayList<Transaction> transactions) {
+        ArrayList<CryptoCurrency> cryptoCurrencies = transactions.stream().map(t -> t.getCrypto()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<CryptoActiveDTO> cryptoActiveDTOS = new ArrayList<>();
+        for(int i = 0; i < cryptoCurrencies.size(); i++){
+            CryptoCurrency crypto = cryptoCurrencies.get(i);
+            CryptoActiveDTO dto = new CryptoActiveDTO(crypto.getSymbol(), crypto.getAmount(), crypto.getPrice(), crypto.getPriceInARS());
+            cryptoActiveDTOS.add(dto);
+        }
+        return cryptoActiveDTOS;
     }
 }

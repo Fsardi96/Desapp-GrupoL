@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.CryptoActiveDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.serialize.UserJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

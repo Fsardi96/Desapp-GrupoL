@@ -26,32 +26,12 @@ public class DatabaseInitializate  {
     @Autowired
     private UserService userService;
 
-
-
     @PostConstruct
     public void initializer() throws Exception {
         System.out.println("Inicializando Clases");
 
-        /*-------------------------------*User*---------------------------------------------------------------- */
+       //-------------------------------*User*----------------------------------------------------------------
 
-
-     /*   LocalDateTime fecha1 = LocalDateTime.now();
-        LocalDateTime fecha2 = LocalDateTime.now();
-
-        fecha1 = fecha1.plusMinutes(30); //Le sumo 30 min a la fecha 1
-
-        long minutes = ChronoUnit.MINUTES.between(fecha2, fecha1);
-
-        System.out.println(minutes);
-*/
-        String str = "2022-06-05 11:30:40";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-
-        System.out.println(dateTime);
-
-
-/*
         UserCreateDTO userDto1 = new UserCreateDTO("Juan","Perez","Perez@dessap.com","Catamarca 134","Facundo1.","12345678912345678912aa","1234567a");
         UserCreateDTO userDto2 = new UserCreateDTO("Martin","Garcia","Garcia@dessap.com","SanLuis 134","Facundo2.","12345678912345678912ab","1234567b");
         UserCreateDTO userDto3 = new UserCreateDTO("Fernando","Rodriguez","Rodriguez@dessap.com","Larrea 134","Facundo3.","12345678912345678912ac","1234567c");
@@ -66,6 +46,6 @@ public class DatabaseInitializate  {
         transactionService.createTransaction(transaction1,user1.getId());
         transactionService.createTransaction(transaction2,user2.getId());
         transactionService.createTransaction(transaction3,user3.getId());
-        System.out.println("Fin de Inicialización");*/
+        System.out.println("Fin de Inicialización");
     }
 }

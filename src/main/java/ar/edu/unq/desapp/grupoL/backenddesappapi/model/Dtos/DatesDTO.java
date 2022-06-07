@@ -9,6 +9,8 @@ public class DatesDTO {
         this.date2 = date2;
     }
 
+    public DatesDTO() { }
+
     public String getDate1() {
         return date1;
     }

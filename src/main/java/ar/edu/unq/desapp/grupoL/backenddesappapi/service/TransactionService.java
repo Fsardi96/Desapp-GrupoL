@@ -92,6 +92,8 @@ public class TransactionService {
             userService.updateUser(transaction.getUser());
             userService.updateUser(secondaryUser);
 
+            transaction.setSecondaryUser(secondaryUser);
+
             this.updateTransaction(transaction);
             return transaction;
         }
