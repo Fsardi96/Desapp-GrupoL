@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
@@ -13,14 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -60,8 +53,14 @@ public class TransactionService {
         return this.transactionRepository.save(newTransaction);
     }
 
+    @Transactional
     public List<Transaction> getTransactionsByUserId(Long id) {
         return this.transactionRepository.getTransactionsByUserId(id);
+    }
+
+    @Transactional
+    public void deleteTransaction(Long id) {
+        this.transactionRepository.deleteById(id);
     }
 
     @Transactional
@@ -69,7 +68,7 @@ public class TransactionService {
         this.transactionRepository.save(transaction);
     }
 
-    public List<TransactionDTO> processTransactionsToDTO(List<Transaction> retrievedTransactions) {
+    public List<TransactionDTO> transformTransactionsToDTO(List<Transaction> retrievedTransactions) {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
         retrievedTransactions.stream().forEach((transaction) -> {
@@ -81,9 +80,7 @@ public class TransactionService {
         return transactionDTOS;
     }
 
-    public void deleteTransaction(Long id) {
-        this.transactionRepository.deleteById(id);
-    }
+
 
     public Transaction processTransaction(Long transactionID, Long secondaryUserID) {
 
@@ -116,7 +113,7 @@ public class TransactionService {
     }
 
     private boolean isValidTransaction(Transaction transaction) {
-        return !transaction.getStatus().equals("Procesada");
+        return transaction.getStatus().equals("En curso");
     }
 
     public void cancelTransaction(Long transactionID) {

@@ -5,9 +5,7 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.TransactionService;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +30,7 @@ public class TransactionController {
     @Operation(summary = "Get all transactions")
     @GetMapping("/transactions")
     public List<TransactionDTO> getTransactions(){
-        return this.transactionService.processTransactionsToDTO(transactionService.getTransactions());
+        return this.transactionService.transformTransactionsToDTO(transactionService.getTransactions());
     }
 
     @Operation(summary = "Get user transactions")
@@ -40,7 +38,7 @@ public class TransactionController {
         public List<TransactionDTO> getTransactionsByUserId(@Parameter(description = "The user ID that needs to be fetched")
                                                                 @PathVariable Long id) {
          transactionService.getTransactionsByUserId(id);
-         return this.transactionService.processTransactionsToDTO(transactionService.getTransactionsByUserId(id));
+         return this.transactionService.transformTransactionsToDTO(transactionService.getTransactionsByUserId(id));
     }
 
     @Operation(summary = "Create user transaction")
