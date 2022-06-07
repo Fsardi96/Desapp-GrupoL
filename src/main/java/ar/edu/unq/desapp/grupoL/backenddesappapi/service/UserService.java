@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UserService {
@@ -91,18 +90,22 @@ public class UserService {
 
         User userFound = this.findUser(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateFrom = LocalDateTime.parse(dates.getDate1(), formatter);
-        LocalDateTime dateTo = LocalDateTime.parse(dates.getDate2(), formatter);
+        LocalDateTime dateFrom = LocalDateTime.parse(dates.getDateFrom(), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(dates.getDateTo(), formatter);
 
         ArrayList<Transaction> processedTransactions = transactions.stream().filter(t -> t.getStatus().equals("Procesada") &&
+                                                                    this.isBetweenDates(t.getDateAndTime(), dateFrom, dateTo) &&
                                                                     (t.getUser().getId().equals(id) || t.getSecondaryUser().getId().equals(id)))
                                                                     .collect(Collectors.toCollection(ArrayList::new));
-
         Float volumeInUSD = this.volumeInUSD(processedTransactions);
         Float volumeInARS = this.volumeInARS(processedTransactions);
         ArrayList<CryptoActiveDTO> cryptoActives = this.getCryptoActivesFromTransactions(processedTransactions);
 
         return new UserTradedVolumeDTO(userFound.getFullName(), LocalDateTime.now().toString(), volumeInUSD, volumeInARS, cryptoActives);
+    }
+
+    private boolean isBetweenDates(LocalDateTime dateAndTime, LocalDateTime dateFrom, LocalDateTime dateTo) {
+        return dateAndTime.isAfter(dateFrom) && dateAndTime.isBefore(dateTo);
     }
 
     public float volumeInUSD(ArrayList<Transaction> transactions) {
