@@ -58,25 +58,25 @@ public class TransactionController {
         return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime().toString(),
                 crypto.getSymbol(), crypto.getAmount(),
                                     crypto.getPrice(), crypto.getPriceInARS(),
-                                    savedTransaction.getTransactionType(), username, operationNumber, score);
+                                    savedTransaction.getTransactionType(), username, operationNumber, score,savedTransaction.getStatus());
     }
 
     @Operation(summary =  "Process a transaction")
     @PostMapping(path="/processTransaction/transaction={transactionID}/secondaryUser={userID}", produces = "application/json")
     public ResponseEntity<TransactionProcessedDTO> processTransaction(@Parameter(description = "The transaction ID") @PathVariable Long transactionID,
                                                      @Parameter(description = "The user ID") @PathVariable Long userID) {
-        Transaction transaction = transactionService.findTransaction(transactionID);
-        transactionService.processTransaction(transaction, userID);
 
 
-        TransactionProcessedDTO dto = new TransactionProcessedDTO(transaction.getCrypto().getSymbol(),
-                                                                    transaction.getAmountOfCrypto(),
-                                                                    transaction.getPriceOfCrypto(),
-                                                                    transaction.getFinalPriceInARS(),
-                                                                    transaction.getUser().getFullName(),
-                                                                    transaction.getUser().getOperationsNumber(),
-                                                                    transaction.getUser().getScore(),
-                                                                    transaction.getAddress());
+        Transaction transactionProcessed = transactionService.processTransaction(transactionID, userID);
+
+        TransactionProcessedDTO dto = new TransactionProcessedDTO(transactionProcessed.getCrypto().getSymbol(),
+                                                                transactionProcessed.getAmountOfCrypto(),
+                                                                transactionProcessed.getPriceOfCrypto(),
+                                                                transactionProcessed.getFinalPriceInARS(),
+                                                                transactionProcessed.getUser().getFullName(),
+                                                                transactionProcessed.getUser().getOperationsNumber(),
+                                                                transactionProcessed.getUser().getScore(),
+                                                                transactionProcessed.getAddress(),transactionProcessed.getStatus());
 
         return ResponseEntity.ok().body(dto);
     }

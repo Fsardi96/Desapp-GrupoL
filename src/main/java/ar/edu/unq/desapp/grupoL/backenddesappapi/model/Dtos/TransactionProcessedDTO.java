@@ -10,10 +10,11 @@ public class TransactionProcessedDTO {
     private Integer operationsNumber;
     private String score;
     private String address;
+    private String status;
 
     public TransactionProcessedDTO(String cryptoSymbol, Float amountOfCrypto, Float priceOfCrypto,
                                    Float finalPriceInARS, String userName, Integer operationsNumber,
-                                   String score, String address) {
+                                   String score, String address, String status) {
         this.cryptoSymbol = cryptoSymbol;
         this.amountOfCrypto = amountOfCrypto;
         this.priceOfCrypto = priceOfCrypto;
@@ -22,6 +23,7 @@ public class TransactionProcessedDTO {
         this.operationsNumber = operationsNumber;
         this.score = score;
         this.address = address;
+        this.status = status;
     }
 
     public TransactionProcessedDTO() { }
@@ -88,5 +90,13 @@ public class TransactionProcessedDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

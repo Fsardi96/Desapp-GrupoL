@@ -14,8 +14,10 @@ public class TransactionDTO {
  private String userFullName;
  private Integer operationsNumber;
  private String score;
+ private String status;
 
- public TransactionDTO(Long id, String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS, String transactionType, String userFullName, Integer operationsNumber, String score) {
+ public TransactionDTO(Long id, String dateAndTime, String crypto, Float amountOfCrypto, Float priceOfCrypto, Float priceInARS,
+                       String transactionType, String userFullName, Integer operationsNumber, String score, String status) {
   this.id = id;
   this.dateAndTime = dateAndTime;
   this.crypto = crypto;
@@ -26,6 +28,7 @@ public class TransactionDTO {
   this.userFullName = userFullName;
   this.operationsNumber = operationsNumber;
   this.score = score;
+  this.status = status;
  }
 
  public TransactionDTO() {
@@ -111,5 +114,13 @@ public class TransactionDTO {
 
  public void setDateAndTime(String dateAndTime) {
   this.dateAndTime = dateAndTime;
+ }
+
+ public String getStatus() {
+  return status;
+ }
+
+ public void setStatus(String status) {
+  this.status = status;
  }
 }

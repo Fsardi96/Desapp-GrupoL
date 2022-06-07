@@ -19,6 +19,7 @@ public class TransactionJsonSerializer extends JsonSerializer<Transaction> {
         jgen.writeObjectField("crypto", transaction.getCrypto());
         jgen.writeStringField("transactionType", transaction.getTransactionType());
         jgen.writeObjectField("user", transaction.getUser());
+        jgen.writeStringField("status", transaction.getStatus());
 
         jgen.writeEndObject();
     }

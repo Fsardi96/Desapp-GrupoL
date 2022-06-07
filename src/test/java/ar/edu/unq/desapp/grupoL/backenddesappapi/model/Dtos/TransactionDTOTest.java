@@ -9,7 +9,7 @@ class TransactionDTOTest {
     @Test
     void testTransactionDTOModel() {
         TransactionDTO dto = new TransactionDTO(2L, LocalDateTime.now().toString(), "crypto",10f,10f,
-                10f,"type","Pepe", 0, "SinOperaciones");
+                10f,"type","Pepe", 0, "SinOperaciones","En curso");
 
         Assertions.assertEquals(2L, dto.getId());
         Assertions.assertEquals("crypto", dto.getCrypto());

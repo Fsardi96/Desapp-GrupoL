@@ -4,6 +4,10 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.ProccesingWithSameUser;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.TransactionCanNotBeProcessed;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserAlreadyExists;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.UserNotFound;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.TransactionRepository;
@@ -18,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -73,7 +78,7 @@ public class TransactionService {
             transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime().toString(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
                     transaction.getPriceOfCrypto(), transaction.getFinalPriceInARS(), transaction.getTransactionType(),
                     transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
-                    transaction.getUser().getScore()));
+                    transaction.getUser().getScore(),transaction.getStatus()));
         });
         return transactionDTOS;
     }
@@ -85,34 +90,45 @@ public class TransactionService {
 
 
 
+    public Transaction processTransaction(Long transactionID, Long secondaryUserID) {
 
+        if(this.isValidTransaction(transactionID)) {
+            Transaction transaction = this.findTransaction(transactionID);
+            if( this.areValidUsers(transaction,secondaryUserID)) {
+                User secondaryUser = userService.findUser(secondaryUserID);
+                transaction.process(secondaryUser);
 
-    public void processTransaction(Transaction transaction, Long secondaryUserID) {
-        //TODO: verificar que no se esté operando con 2 usuarios iguales.
-        //TODO: if transaction == "En Curso" OK, ELSE{error}
-        User secondaryUser = userService.findUser(secondaryUserID);
-        transaction.process(secondaryUser);
+                userService.updateUser(transaction.getUser());
+                userService.updateUser(secondaryUser);
 
-        userService.updateUser(transaction.getUser());
-        userService.updateUser(secondaryUser);
+                this.updateTransaction(transaction);
+                return transaction;
+            }
+        }
+    }
 
+    private boolean areValidUsers(Transaction transaction, Long secondaryUserID){
+        if(transaction.getUser().getId().equals(secondaryUserID)){
+            throw new ProccesingWithSameUser();
+        }
 
-        //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "PROCESADA" y hacerle un SAVE
-        this.updateTransaction(transaction);
+        if(userService.findUser(secondaryUserID) == null){
+            throw new UserNotFound();
+        }
+
+    }
+
+    private boolean isValidTransaction(Transaction transaction, Long secondaryUserID) {
+
+        if(transaction.getStatus().equals("Procesada")){
+            throw new TransactionCanNotBeProcessed();
+        }
     }
 
 
-
-
-
-
-
-
     public void cancelTransaction(Long transactionID) {
+        //TODO VALIDAR QUE EXISTE LA TRANSACTINO
         Transaction transaction = this.findTransaction(transactionID);
         transaction.cancel();
-
-        //TODO: CAMBIAR EL ESTADO DE LA TRANSACCIÓN A "Cancelada" y hacerle un SAVE
-
     }
 }

@@ -35,6 +35,7 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
     private String transactionType;
+    private String status;
 
     public Transaction(CryptoCurrency crypto, User user, String transactionType) {
         this.dateAndTime = LocalDateTime.now();
@@ -44,6 +45,7 @@ public class Transaction {
         this.amountOfCrypto = crypto.getAmount();
         this.priceOfCrypto = crypto.getPrice();
         this.finalPriceInARS = crypto.getPriceInARS() * this.amountOfCrypto;
+        this.status = "En curso";
     }
 
     public Long getId() {
@@ -110,11 +112,20 @@ public class Transaction {
         this.priceOfCrypto = priceOfCryto;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void process(User secondaryUser) {
         user.setOperationsNumber(user.getOperationsNumber() + 1);
         secondaryUser.setOperationsNumber(secondaryUser.getOperationsNumber() + 1);
 
         long difference = ChronoUnit.MINUTES.between(LocalDateTime.now(), this.getDateAndTime());
+
         if(difference <= 30){
             defineScore(this.getUser(),10);
             defineScore(secondaryUser,10);
@@ -122,6 +133,7 @@ public class Transaction {
             defineScore(this.getUser(),5);
             defineScore(secondaryUser,5);
         }
+        this.changeStatusToProcessed();
     }
 
     public void defineScore(User user, int scoreToIncrement){
@@ -141,6 +153,7 @@ public class Transaction {
             Integer newScore = (Integer.parseInt(user.getScore()) - 20);
             user.setScore(newScore.toString());
         }
+        this.changeStatusToCancelled();
     }
 
     public String getAddress() {
@@ -149,5 +162,13 @@ public class Transaction {
         } else {
             return user.getCvu();
         }
+    }
+
+    public void changeStatusToProcessed() {
+        this.setStatus("Procesada");
+    }
+
+    public void changeStatusToCancelled() {
+        this.setStatus("Cancelada");
     }
 }
