@@ -129,7 +129,7 @@ public class UserService {
         ArrayList<CryptoActiveDTO> cryptoActiveDTOS = new ArrayList<>();
         for(int i = 0; i < cryptoCurrencies.size(); i++){
             CryptoCurrency crypto = cryptoCurrencies.get(i);
-            CryptoActiveDTO dto = new CryptoActiveDTO(crypto.getSymbol(), crypto.getAmount(), crypto.getPrice(), crypto.getPriceInARS());
+            CryptoActiveDTO dto = new CryptoActiveDTO(crypto.getSymbol(), crypto.getAmount(), crypto.getPrice(), crypto.getPriceInARS() * crypto.getAmount());
             cryptoActiveDTOS.add(dto);
         }
         return cryptoActiveDTOS;
