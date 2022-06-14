@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.Helpers.CurrentDateTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyEnum;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
@@ -10,8 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Api (tags = "CryptoCurrency services")
 @Tag(name = "CryptoCurrency services", description = "Manage cryptocurrencies")
@@ -42,10 +32,10 @@ public class CryptoController {
 
     @Operation(summary = "Get a cryptocurrency price")
     @GetMapping("/getCrypoValue/{cryptoSymbol}")
-    public CryptoDTO getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
+    public ResponseEntity<CryptoDTO> getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
                                                                      @PathVariable String cryptoSymbol){
         CryptoCurrency crypto = cryptoService.findCrypto(cryptoSymbol);
-        return new CryptoDTO(crypto.getSymbol(), crypto.getPrice(), crypto.getLastUpdateDateAndTime().toString());
+        return ResponseEntity.ok().body(new CryptoDTO(crypto.getSymbol(), crypto.getPrice(), crypto.getLastUpdateDateAndTime().toString()));
     }
 
     @Operation(summary = "Get all cryptocurrency prices")

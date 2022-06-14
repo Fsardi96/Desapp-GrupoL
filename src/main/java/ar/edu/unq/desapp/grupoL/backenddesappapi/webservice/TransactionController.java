@@ -43,20 +43,14 @@ public class TransactionController {
 
     @Operation(summary = "Create user transaction")
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
-    public TransactionDTO createTransaction(@Parameter(description = "The user ID") @PathVariable Long userID,
-                                            @Parameter(description = "The transaction to be registered")
+    public ResponseEntity<TransactionDTO> createTransaction(@Parameter(description = "The user ID") @PathVariable Long userID,
+                                                            @Parameter(description = "The transaction to be registered")
                                             @RequestBody TransactionCreateDTO transaction) throws IOException {
-        Transaction savedTransaction = transactionService.createTransaction(transaction, userID);
 
-        String username = savedTransaction.getUser().getFullName();
-        Integer operationNumber = savedTransaction.getUser().getOperationsNumber();
-        String score = savedTransaction.getUser().getScore();
-        CryptoCurrency crypto = savedTransaction.getCrypto();
+        Transaction newTransaction = transactionService.createTransaction(transaction, userID);
+        TransactionDTO  transactionDTO = transactionService.makeTransactionDTO(newTransaction);
 
-        return new TransactionDTO(savedTransaction.getId(), savedTransaction.getDateAndTime().toString(),
-                crypto.getSymbol(), crypto.getAmount(),
-                                    crypto.getPrice(), crypto.getPriceInARS(),
-                                    savedTransaction.getTransactionType(), username, operationNumber, score,savedTransaction.getStatus());
+        return ResponseEntity.ok().body(transactionDTO);
     }
 
     @Operation(summary =  "Process a transaction")
@@ -66,17 +60,7 @@ public class TransactionController {
 
 
         Transaction transactionProcessed = transactionService.processTransaction(transactionID, userID);
-
-        TransactionProcessedDTO dto = new TransactionProcessedDTO(transactionProcessed.getCrypto().getSymbol(),
-                                                                transactionProcessed.getAmountOfCrypto(),
-                                                                transactionProcessed.getPriceOfCrypto(),
-                                                                transactionProcessed.getFinalPriceInARS(),
-                                                                transactionProcessed.getUser().getFullName(),
-                                                                transactionProcessed.getUser().getOperationsNumber(),
-                                                                transactionProcessed.getUser().getScore(),
-                                                                transactionProcessed.getAddress(),transactionProcessed.getStatus());
-
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(transactionService.makeTransactionProcessedDTO(transactionProcessed));
     }
 
     @Operation(summary =  "Cancel a transaction")

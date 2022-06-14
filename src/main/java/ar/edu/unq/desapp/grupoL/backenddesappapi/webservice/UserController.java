@@ -44,14 +44,15 @@ public class UserController {
 
     @Operation(summary = "Register user")
     @PostMapping(path="/addUser" , consumes = "application/json", produces = "application/json")
-    public User createUser(@Parameter(description = "The user to be registered", required = true)
+    public ResponseEntity<User> createUser(@Parameter(description = "The user to be registered", required = true)
                                @RequestBody UserCreateDTO user) throws UserError{
-        return this.userService.createUser(user);
+
+        return ResponseEntity.ok().body(this.userService.createUser(user));
     }
 
     @Operation(summary = "Delete user")
     @DeleteMapping("/deleteUser/{id}")
-    public void deleteUser(@Parameter(description = "The user ID to be deleted", required = true)
+    public String deleteUser(@Parameter(description = "The user ID to be deleted", required = true)
                                @PathVariable Long id){
         List<Transaction> transactionsByID = this.transactionService.getTransactionsByUserId(id);
         if(!transactionsByID.isEmpty()) {
@@ -59,6 +60,7 @@ public class UserController {
         }else{
             this.userService.deleteUser(id);
         }
+        return("The user was successfully deleted");
     }
 
 

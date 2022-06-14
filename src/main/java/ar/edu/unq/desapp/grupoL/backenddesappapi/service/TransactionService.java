@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.*;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
@@ -122,4 +123,30 @@ public class TransactionService {
         Transaction transaction = this.findTransaction(transactionID);
         transaction.cancel();
     }
+
+    public TransactionDTO makeTransactionDTO(Transaction newTransaction) {
+
+        String username = newTransaction.getUser().getFullName();
+        Integer operationNumber = newTransaction.getUser().getOperationsNumber();
+        String score = newTransaction.getUser().getScore();
+        CryptoCurrency crypto = newTransaction.getCrypto();
+
+       return new TransactionDTO(newTransaction.getId(), newTransaction.getDateAndTime().toString(),
+                crypto.getSymbol(), crypto.getAmount(),
+                crypto.getPrice(), crypto.getPriceInARS(),
+               newTransaction.getTransactionType(), username, operationNumber, score,newTransaction.getStatus());
+    }
+
+    public TransactionProcessedDTO makeTransactionProcessedDTO(Transaction transactionProcessed) {
+
+       return new TransactionProcessedDTO(transactionProcessed.getCrypto().getSymbol(),
+                transactionProcessed.getAmountOfCrypto(),
+                transactionProcessed.getPriceOfCrypto(),
+                transactionProcessed.getFinalPriceInARS(),
+                transactionProcessed.getUser().getFullName(),
+                transactionProcessed.getUser().getOperationsNumber(),
+                transactionProcessed.getUser().getScore(), transactionProcessed.getAddress(),transactionProcessed.getStatus());
+    }
+
+
 }
