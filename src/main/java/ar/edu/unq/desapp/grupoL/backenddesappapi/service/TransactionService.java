@@ -82,7 +82,7 @@ public class TransactionService {
     }
 
 
-
+    @Transactional
     public Transaction processTransaction(Long transactionID, Long secondaryUserID) {
 
         Transaction transaction = this.findTransaction(transactionID);
