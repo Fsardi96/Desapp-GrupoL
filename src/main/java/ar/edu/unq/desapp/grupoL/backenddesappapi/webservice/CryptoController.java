@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+
 
 @Api (tags = "CryptoCurrency services")
 @Tag(name = "CryptoCurrency services", description = "Manage cryptocurrencies")
@@ -33,9 +35,9 @@ public class CryptoController {
     @Operation(summary = "Get a cryptocurrency price")
     @GetMapping("/getCrypoValue/{cryptoSymbol}")
     public ResponseEntity<CryptoDTO> getCryptoCurrencyValue(@Parameter(description = "The cryptocurrency symbol that needs to be fetched", required = true)
-                                                                     @PathVariable String cryptoSymbol){
-        CryptoCurrency crypto = cryptoService.findCrypto(cryptoSymbol);
-        return ResponseEntity.ok().body(new CryptoDTO(crypto.getSymbol(), crypto.getPrice(), crypto.getLastUpdateDateAndTime().toString()));
+                                                                     @PathVariable String cryptoSymbol) throws IOException {
+        Float price = cryptoService.fetchCryptoPriceByEndpoint(cryptoSymbol);
+        return ResponseEntity.ok().body(new CryptoDTO(cryptoSymbol, price, LocalDateTime.now().toString()) );
     }
 
     @Operation(summary = "Get all cryptocurrency prices")

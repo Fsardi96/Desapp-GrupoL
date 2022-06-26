@@ -26,8 +26,7 @@ public class Transaction {
     @Column
     private Long id;
     private LocalDateTime dateAndTime;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private CryptoCurrency crypto;
+    private String crypto;
     private Float amountOfCrypto;
     private Float priceOfCrypto;
     private Float finalPriceInARS;
@@ -39,14 +38,14 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User secondaryUser;
 
-    public Transaction(CryptoCurrency crypto, User user, String transactionType) {
+    public Transaction(String crypto, User user, String transactionType, Float amountOfCrypto, Float priceOfCrypto, Float finalPriceInARS) {
         this.dateAndTime = LocalDateTime.now();
         this.crypto = crypto;
         this.user = user;
         this.transactionType = transactionType;
-        this.amountOfCrypto = crypto.getAmount();
-        this.priceOfCrypto = crypto.getPrice();
-        this.finalPriceInARS = crypto.getPriceInARS() * this.amountOfCrypto;
+        this.amountOfCrypto = amountOfCrypto;
+        this.priceOfCrypto = priceOfCrypto;
+        this.finalPriceInARS = finalPriceInARS;
         this.status = "En curso";
         this.secondaryUser = null;
     }
@@ -67,11 +66,11 @@ public class Transaction {
         this.dateAndTime = dateAndTime;
     }
 
-    public CryptoCurrency getCrypto() {
+    public String getCrypto() {
         return crypto;
     }
 
-    public void setCrypto(CryptoCurrency crypto) {
+    public void setCrypto(String crypto) {
         this.crypto = crypto;
     }
 

@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static ar.edu.unq.desapp.grupoL.backenddesappapi.service.CryptoService.getResponseBody;
@@ -60,10 +60,12 @@ public class CryptosPriceService {
         return json.getFloat("price");
     }
 
+    public Boolean isThereAnyRecord() {
+        return cryptosPriceRepository.anyRecord() ;
+    }
 
 
-
-
-
-
+    public CryptosPrice fetchCryptoPriceByDB(String cryptoSymbol) {
+        return cryptosPriceRepository.getPriceOf(cryptoSymbol);
+    }
 }

@@ -1,12 +1,9 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Transaction;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.repositories.CryptoRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -16,17 +13,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 public class CryptoService {
     @Autowired
     CryptoRepository cryptoRepository;
+    @Autowired
+    CryptosPriceService cryptosPriceService;
+
+
     private RestTemplate restTemplate = new RestTemplate();
 
-
+/*
     @Transactional
     public CryptoCurrency findCrypto(String cryptoSymbol) {
         CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + cryptoSymbol, CryptoCurrency.class);
@@ -36,6 +34,16 @@ public class CryptoService {
         }
         return entity;
     }
+    */
+
+
+    @Transactional
+    public Float fetchCryptoPriceByEndpoint(String cryptoSymbol) throws IOException {
+        return cryptosPriceService.getCryptoPrice(cryptoSymbol);
+    }
+
+
+
 
     @Transactional
     public float getUSDPrice() throws IOException {

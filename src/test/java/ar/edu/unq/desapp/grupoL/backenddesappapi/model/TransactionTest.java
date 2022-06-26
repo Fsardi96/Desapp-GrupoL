@@ -14,11 +14,11 @@ class TransactionTest {
     void testTransactionModel() {
 
         CryptoCurrency crypto = new CryptoCurrency("symbol", 10f,30f, 2F, LocalDateTime.now());
-        Transaction transaction = new Transaction(crypto, user, "transactionType");
+        Transaction transaction = new Transaction("symbol", user, "transactionType",1f,1f,1f);
 
         //Assertions.assertEquals(LocalDateTime.now(), transaction.getDateAndTime());
-        Assertions.assertEquals(2f, transaction.getCrypto().getAmount());
-        Assertions.assertEquals(10f, transaction.getCrypto().getPrice());
+        Assertions.assertEquals(2f, transaction.getAmountOfCrypto());
+        Assertions.assertEquals(10f, transaction.getPriceOfCrypto());
         Assertions.assertEquals(transaction.getUser(), user);
         Assertions.assertEquals("transactionType", transaction.getTransactionType());
     }

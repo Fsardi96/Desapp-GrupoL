@@ -125,11 +125,12 @@ public class UserService {
     }
 
     public ArrayList<CryptoActiveDTO> getCryptoActivesFromTransactions(ArrayList<Transaction> transactions) {
-        ArrayList<CryptoCurrency> cryptoCurrencies = transactions.stream().map(t -> t.getCrypto()).collect(Collectors.toCollection(ArrayList::new));
+       // ArrayList<CryptoCurrency> cryptoCurrencies = transactions.stream().map(t -> t.getCrypto()).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<CryptoActiveDTO> cryptoActiveDTOS = new ArrayList<>();
-        for(int i = 0; i < cryptoCurrencies.size(); i++){
-            CryptoCurrency crypto = cryptoCurrencies.get(i);
-            CryptoActiveDTO dto = new CryptoActiveDTO(crypto.getSymbol(), crypto.getAmount(), crypto.getPrice(), crypto.getPriceInARS() * crypto.getAmount());
+        for(int i = 0; i < transactions.size(); i++){
+            Transaction transaction = transactions.get(i);
+            CryptoActiveDTO dto = new CryptoActiveDTO(transaction.getCrypto(), transaction.getAmountOfCrypto(), transaction.getPriceOfCrypto(),
+                                                    transaction.getFinalPriceInARS());
             cryptoActiveDTOS.add(dto);
         }
         return cryptoActiveDTOS;

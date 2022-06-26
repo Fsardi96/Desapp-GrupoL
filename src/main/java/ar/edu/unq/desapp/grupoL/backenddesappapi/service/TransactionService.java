@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptosPrice;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
@@ -19,13 +19,14 @@ import java.util.List;
 @Service
 public class TransactionService {
     @Autowired
+    CryptosPriceService cryptosPriceService;
+    @Autowired
     TransactionRepository transactionRepository;
-
     @Autowired
     UserService userService;
-
     @Autowired
     CryptoService cryptoService;
+
 
     public TransactionService() {
         //Empty constructor
@@ -44,13 +45,17 @@ public class TransactionService {
     @Transactional
     public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) throws IOException {
 
-        CryptoCurrency crypto = cryptoService.findCrypto(transaction.getCryptoSymbol());
-        float finalDolarInARS = cryptoService.getUSDPrice() * crypto.getPrice();
-        crypto.setPriceInARS(finalDolarInARS );
-        crypto.setAmount(transaction.getAmountOfCrypto());
+        //if( cryptosPriceService.isThereAnyRecord()){
+             CryptosPrice priceDB = cryptosPriceService.fetchCryptoPriceByDB(transaction.getCryptoSymbol());
+             System.out.println(priceDB);
+
+            Float price = cryptoService.fetchCryptoPriceByEndpoint(transaction.getCryptoSymbol());
+
+        Float finalDolarInARS = cryptoService.getUSDPrice() * price;
         User user = userService.findUser(userID);
-        Transaction newTransaction = new Transaction(crypto,
-                user,transaction.getTransactionType());
+        Float amountOfCrypto = transaction.getAmountOfCrypto();
+        Transaction newTransaction = new Transaction(transaction.getCryptoSymbol(),
+                user,transaction.getTransactionType(),amountOfCrypto,price * amountOfCrypto,finalDolarInARS * amountOfCrypto);
         return this.transactionRepository.save(newTransaction);
     }
 
@@ -73,7 +78,7 @@ public class TransactionService {
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
 
         retrievedTransactions.stream().forEach((transaction) -> {
-            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime().toString(), transaction.getCrypto().getSymbol(), transaction.getAmountOfCrypto(),
+            transactionDTOS.add(new TransactionDTO(transaction.getId(), transaction.getDateAndTime().toString(), transaction.getCrypto(), transaction.getAmountOfCrypto(),
                     transaction.getPriceOfCrypto(), transaction.getFinalPriceInARS(), transaction.getTransactionType(),
                     transaction.getUser().getName() + " " + transaction.getUser().getSurname(), transaction.getUser().getOperationsNumber(),
                     transaction.getUser().getScore(),transaction.getStatus()));
@@ -119,6 +124,7 @@ public class TransactionService {
         return transaction.getStatus().equals("En curso");
     }
 
+    @Transactional
     public void cancelTransaction(Long transactionID) {
         Transaction transaction = this.findTransaction(transactionID);
         transaction.cancel();
@@ -129,17 +135,16 @@ public class TransactionService {
         String username = newTransaction.getUser().getFullName();
         Integer operationNumber = newTransaction.getUser().getOperationsNumber();
         String score = newTransaction.getUser().getScore();
-        CryptoCurrency crypto = newTransaction.getCrypto();
 
        return new TransactionDTO(newTransaction.getId(), newTransaction.getDateAndTime().toString(),
-                crypto.getSymbol(), crypto.getAmount(),
-                crypto.getPrice(), crypto.getPriceInARS(),
+               newTransaction.getCrypto(), newTransaction.getAmountOfCrypto(),
+               newTransaction.getPriceOfCrypto(), newTransaction.getFinalPriceInARS(),
                newTransaction.getTransactionType(), username, operationNumber, score,newTransaction.getStatus());
     }
 
     public TransactionProcessedDTO makeTransactionProcessedDTO(Transaction transactionProcessed) {
 
-       return new TransactionProcessedDTO(transactionProcessed.getCrypto().getSymbol(),
+       return new TransactionProcessedDTO(transactionProcessed.getCrypto(),
                 transactionProcessed.getAmountOfCrypto(),
                 transactionProcessed.getPriceOfCrypto(),
                 transactionProcessed.getFinalPriceInARS(),
