@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 
 // THIS CLASS IS JUST AN EXAMPLE ABOUT HOW TO CREATE A SCHEADULED TASK
-@Component
+//@Component
 public class ScheduledTask {
 
     //@Scheduled(fixedRate = 10000)
@@ -14,7 +14,7 @@ public class ScheduledTask {
         System.out.println("TAREA PROGRAMADA");
     }
 
-    @Scheduled(cron = "*/60 * * * * *")   //se dispara cada 1 min
+   // @Scheduled(cron = "0 0/1 * * * *")   //se dispara cada 1 min
     public void tarea2(){
         System.out.println("TAREA PROGRAMADA2");
     }
