@@ -32,7 +32,7 @@ public class TransactionServiceTest {
     UserService userService;
 
     @Mock
-    CryptoService cryptoService;
+    CryptosPriceService cryptosPriceService;
 
     @Test
     public void getTransactions() {
@@ -62,8 +62,8 @@ public class TransactionServiceTest {
         User user = new User("name", "surname", "email", "address",
                             "password", "cvu", "wallet");
 
-        when(cryptoService.fetchCryptoPriceByEndpoint("symbol")).thenReturn(2f);
-        when(cryptoService.getUSDPrice()).thenReturn(2f);
+        when(cryptosPriceService.getCryptoPrice("symbol")).thenReturn(2f);
+        when(cryptosPriceService.getUSDPrice()).thenReturn(2f);
         when(userService.findUser(1L)).thenReturn(user);
 
         transactionService.createTransaction(transactionDTO, 1L);

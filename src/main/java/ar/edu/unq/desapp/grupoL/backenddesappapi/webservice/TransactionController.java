@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTime;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
+
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

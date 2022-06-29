@@ -23,8 +23,7 @@ public class TransactionService {
     TransactionRepository transactionRepository;
     @Autowired
     UserService userService;
-    @Autowired
-    CryptoService cryptoService;
+
 
 
     public TransactionService() {
@@ -48,8 +47,8 @@ public class TransactionService {
         //String priceDB = cryptosPriceService.fetchCryptoPriceByDB(transaction.getCryptoSymbol());
          //System.out.println("precio buscado: " + priceDB);
 
-        Float price = cryptoService.fetchCryptoPriceByEndpoint(transaction.getCryptoSymbol());
-        Float finalDolarInARS = cryptoService.getUSDPrice() * price;
+        Float price = cryptosPriceService.getCryptoPrice(transaction.getCryptoSymbol());
+        Float finalDolarInARS = cryptosPriceService.getUSDPrice() * price;
         User user = userService.findUser(userID);
         Float amountOfCrypto = transaction.getAmountOfCrypto();
         Transaction newTransaction = new Transaction(transaction.getCryptoSymbol(),
