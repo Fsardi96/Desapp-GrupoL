@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.model;
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.BaseCryptoDTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

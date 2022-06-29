@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptosPrice;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionProcessedDTO;
@@ -105,7 +104,7 @@ public class TransactionService {
         throw new TransactionCanNotBeProcessed();
     }
 
-    private boolean canProcessTransaction(Transaction transaction, Long secondaryUserID) {
+    public boolean canProcessTransaction(Transaction transaction, Long secondaryUserID) {
         if (!this.isValidTransaction(transaction)){
             throw new TransactionCanNotBeProcessed();
         }
@@ -115,11 +114,11 @@ public class TransactionService {
         return true;
     }
 
-    private boolean areValidUsers(Long firstUserID, Long secondaryUserID){
+    public boolean areValidUsers(Long firstUserID, Long secondaryUserID){
         return !firstUserID.equals(secondaryUserID);
     }
 
-    private boolean isValidTransaction(Transaction transaction) {
+    public boolean isValidTransaction(Transaction transaction) {
         return transaction.getStatus().equals("En curso");
     }
 
@@ -151,6 +150,5 @@ public class TransactionService {
                 transactionProcessed.getUser().getOperationsNumber(),
                 transactionProcessed.getUser().getScore(), transactionProcessed.getAddress(),transactionProcessed.getStatus());
     }
-
 
 }

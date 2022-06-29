@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-import java.time.LocalDateTime;
-
 public class CryptoDTO {
     private String symbol;
     private Float price;

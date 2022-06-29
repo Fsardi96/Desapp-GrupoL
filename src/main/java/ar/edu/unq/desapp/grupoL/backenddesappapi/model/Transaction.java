@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -152,7 +150,6 @@ public class Transaction {
             user.setScore(newScore.toString());
         }
     }
-
 
     public void cancel() {
         if (user.getScore().equals("Sin operaciones")) {
