@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,23 +81,4 @@ public class TransactionServiceTest {
 
         verify(transactionRepository, atLeastOnce()).getTransactionsByUserId(1L);
     }
-
-/*    @Test
-    public void processTransaction() {
-        User user = new User("name", "surname", "email", "address",
-                "password", "cvu", "wallet");
-        User secondUser = new User("name", "surname", "email", "address",
-                "password", "cvu", "wallet");
-        Transaction transaction = new Transaction();
-
-        when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
-        when(transactionService.isValidTransaction(transaction)).thenReturn(true);
-        when(transactionService.canProcessTransaction(transaction, 2L)).thenReturn(true);
-        when(userService.findUser(1L)).thenReturn(user);
-        when(userService.findUser(2L)).thenReturn(secondUser);
-
-        transactionService.processTransaction(1L, 2L);
-
-        verify(transactionService, atLeastOnce()).updateTransaction(transaction);
-    }*/
 }
