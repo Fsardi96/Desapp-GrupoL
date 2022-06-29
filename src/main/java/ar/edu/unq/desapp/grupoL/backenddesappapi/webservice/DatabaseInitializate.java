@@ -33,7 +33,6 @@ public class DatabaseInitializate  {
     public void initializer() throws IOException {
 
         //cryptosPriceService.createCryptosPrice();
-/*
 
         log.info("**************** Inicializando Clases ****************");
 
@@ -57,7 +56,6 @@ public class DatabaseInitializate  {
 
         log.info("**************** Fin de Inicialización ****************");
 
-*/
 
 
     }

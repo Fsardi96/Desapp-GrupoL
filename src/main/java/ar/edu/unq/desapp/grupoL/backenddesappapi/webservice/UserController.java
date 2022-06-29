@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTime;
+
 import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.AuthUserDTO;
@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -40,7 +39,6 @@ public class UserController {
     @Autowired
     private AuthenticationManager authManager;
 
-    static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
 
     @PostMapping("/auth/login")
     public Map<String, Object> loginHandler(@RequestBody AuthUserDTO body) {

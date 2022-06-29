@@ -2,10 +2,8 @@ package ar.edu.unq.desapp.grupoL.backenddesappapi.security;
 
 
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.InvalidTokenException;
-import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Errors.InvalidUserOrPassword;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.MyUserDetailsService;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
