@@ -24,8 +24,6 @@ public class ArchitectureTest {
             .that().resideInAPackage ("..service..")
             .should().onlyBeAccessed().byAnyPackage("..webservice..", "..service..","..security..");
 
-
-
     @ArchTest
     public static final ArchRule controllersShouldNotBeAccessedByAnyone = classes()
             .that().resideInAPackage("..webservice..")
@@ -36,13 +34,10 @@ public class ArchitectureTest {
             .that().resideInAPackage("..repositories..")
             .should().onlyBeAccessed().byAnyPackage("..service..", "..repositories..");
 
-
-
     @ArchTest
     public static final ArchRule classesWithNameServiceAtTheEndShouldBeOnlyInServicePackage = classes()
             .that().haveSimpleNameEndingWith("Service")
             .should().resideInAPackage("..service..");
-
 
     @ArchTest
     public static final ArchRule classesWithNameControllerAtTheEndShouldBeOnlyInControllerPackage = classes()
@@ -58,7 +53,6 @@ public class ArchitectureTest {
     public static final ArchRule classesWithNameDTOAtTheEndShouldBeOnlyInDtosPackage = classes()
             .that().haveSimpleNameEndingWith("DTO")
             .should().resideInAPackage("..model.Dtos..");
-
 
     @ArchTest
     public static final ArchRule repositoryClassesShouldBeInterfaces = classes()
@@ -84,6 +78,5 @@ public class ArchitectureTest {
     public static final ArchRule onlyClassesInModelShouldHaveEntityAnnotation = classes()
             .that().areAnnotatedWith(Entity.class)
             .should().resideInAPackage("..model..");
-
 
 }
