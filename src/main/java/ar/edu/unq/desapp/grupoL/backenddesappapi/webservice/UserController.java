@@ -1,6 +1,9 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTime;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.*;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.AuthUserDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.DatesDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.UserTradedVolumeDTO;
@@ -11,8 +14,11 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -20,7 +26,6 @@ import java.util.*;
 @Api(tags = "User services")
 @Tag(name = "User services", description = "Manage users")
 @RestController
-@Transactional
 @RequestMapping("/api")
 public class UserController {
     @Autowired
@@ -28,11 +33,17 @@ public class UserController {
     @Autowired
     private TransactionService transactionService;
 
+
+    static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+
+
+
     @Operation(summary = "Get all users")
     @GetMapping("/users")
     public ArrayList<User> getUsers(){
         return userService.getUsers();
     }
+
 
     @Operation(summary = "Get user")
     @GetMapping("/users/{id}")
@@ -42,6 +53,7 @@ public class UserController {
         return ResponseEntity.ok().body(userFound);
     }
 
+
     @Operation(summary = "Register user")
     @PostMapping(path="/addUser" , consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createUser(@Parameter(description = "The user to be registered", required = true)
@@ -49,6 +61,7 @@ public class UserController {
 
         return ResponseEntity.ok().body(this.userService.createUser(user));
     }
+
 
     @Operation(summary = "Delete user")
     @DeleteMapping("/deleteUser/{id}")
@@ -62,6 +75,7 @@ public class UserController {
         }
         return("The user was successfully deleted");
     }
+
 
 
     @Operation(summary = "Get user transaction between dates")

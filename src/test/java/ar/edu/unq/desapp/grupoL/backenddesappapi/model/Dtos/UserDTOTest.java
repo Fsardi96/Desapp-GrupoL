@@ -7,7 +7,7 @@ class UserDTOTest {
 
     @Test
     void testUserDTOModel() {
-        UserDTO dto = new UserDTO(1L,"name","surname");
+        UserDTO dto = new UserDTO(1L,"name","surname","Password");
 
         Assertions.assertEquals(1L, dto.getId());
         Assertions.assertEquals("name", dto.getName());

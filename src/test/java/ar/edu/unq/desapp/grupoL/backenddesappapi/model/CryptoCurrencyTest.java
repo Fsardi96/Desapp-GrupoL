@@ -29,6 +29,7 @@ class CryptoCurrencyTest {
     }
 }
 
+/*
 class CryptoCurrencyListTest {
     @Test
     void testCryptoCurrencyListModel() {
@@ -38,4 +39,4 @@ class CryptoCurrencyListTest {
 
         Assertions.assertTrue(cryptoList.cryptos.contains(crypto));
     }
-}
+}*/

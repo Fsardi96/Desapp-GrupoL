@@ -46,11 +46,10 @@ public class TransactionService {
     public Transaction createTransaction(TransactionCreateDTO transaction, Long userID) throws IOException {
 
         //if( cryptosPriceService.isThereAnyRecord()){
-             CryptosPrice priceDB = cryptosPriceService.fetchCryptoPriceByDB(transaction.getCryptoSymbol());
-             System.out.println(priceDB);
+        //String priceDB = cryptosPriceService.fetchCryptoPriceByDB(transaction.getCryptoSymbol());
+         //System.out.println("precio buscado: " + priceDB);
 
-            Float price = cryptoService.fetchCryptoPriceByEndpoint(transaction.getCryptoSymbol());
-
+        Float price = cryptoService.fetchCryptoPriceByEndpoint(transaction.getCryptoSymbol());
         Float finalDolarInARS = cryptoService.getUSDPrice() * price;
         User user = userService.findUser(userID);
         Float amountOfCrypto = transaction.getAmountOfCrypto();

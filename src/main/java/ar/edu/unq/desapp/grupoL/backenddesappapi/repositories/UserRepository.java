@@ -7,10 +7,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 
+import java.util.Optional;
+
 @Configuration
 @Repository
 public interface UserRepository extends CrudRepository<User,Long>{
 
     @Query(value = "SELECT CAST(COUNT(1) AS BIT) FROM USER u WHERE u.wallet = :wallet", nativeQuery = true)
     boolean existWallet(@Param("wallet") String wallet);
+
+    Optional<User> findUserByName(String name);
 }

@@ -10,12 +10,15 @@ public class UserDTO {
     private String name;
     @JsonProperty
     private String surname;
+    @JsonProperty
+    private String password;
 
 
-public UserDTO(@JsonProperty("id")Long id , @JsonProperty("name")String name,@JsonProperty("surname") String surname){
+public UserDTO(@JsonProperty("id")Long id , @JsonProperty("name")String name,@JsonProperty("surname") String surname,@JsonProperty("password") String password){
     this.id = id;
     this.name = name;
     this.surname = surname;
+    this.password = password;
 }
 
     public UserDTO() {
@@ -44,5 +47,13 @@ public UserDTO(@JsonProperty("id")Long id , @JsonProperty("name")String name,@Js
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

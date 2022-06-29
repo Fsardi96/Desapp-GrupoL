@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static ar.edu.unq.desapp.grupoL.backenddesappapi.service.CryptoService.getResponseBody;
 
+@Transactional
 @Service
 public class CryptosPriceService {
     @Autowired
@@ -50,7 +51,7 @@ public class CryptosPriceService {
     }
 
 
-
+    @Transactional
     public Float getCryptoPrice(String symbol) throws IOException {
         URL url = new URL("https://api1.binance.com/api/v3/ticker/price?symbol="+symbol);
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -60,12 +61,14 @@ public class CryptosPriceService {
         return json.getFloat("price");
     }
 
+    @Transactional
     public Boolean isThereAnyRecord() {
         return cryptosPriceRepository.anyRecord() ;
     }
 
-
-    public CryptosPrice fetchCryptoPriceByDB(String cryptoSymbol) {
+    @Transactional
+    public String fetchCryptoPriceByDB(String cryptoSymbol) {
+        System.out.println(cryptoSymbol);
         return cryptosPriceRepository.getPriceOf(cryptoSymbol);
     }
 }

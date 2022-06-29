@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionCreateDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.TransactionDTO;
@@ -21,17 +22,18 @@ import java.util.List;
 @Api(tags = "Transaction services")
 @Tag(name = "Transaction services", description = "Manage transactions")
 @RestController
-@Transactional
 @RequestMapping("/api") //method = RequestMethod.GET)
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
+
 
     @Operation(summary = "Get all transactions")
     @GetMapping("/transactions")
     public List<TransactionDTO> getTransactions(){
         return this.transactionService.transformTransactionsToDTO(transactionService.getTransactions());
     }
+
 
     @Operation(summary = "Get user transactions")
     @GetMapping("/transactionsByUserId/{id}")
@@ -40,6 +42,7 @@ public class TransactionController {
          transactionService.getTransactionsByUserId(id);
          return this.transactionService.transformTransactionsToDTO(transactionService.getTransactionsByUserId(id));
     }
+
 
     @Operation(summary = "Create user transaction")
     @PostMapping(path="/addTransaction/user={userID}",  consumes = "application/json", produces = "application/json")
@@ -63,12 +66,12 @@ public class TransactionController {
         return ResponseEntity.ok().body(transactionService.makeTransactionProcessedDTO(transactionProcessed));
     }
 
+
     @Operation(summary =  "Cancel a transaction")
     @DeleteMapping(path="/cancelTransaction/transaction={transactionID}")
     public ResponseEntity<String> cancelTransaction(@Parameter(description = "The transaction ID") @PathVariable Long transactionID) {
         transactionService.cancelTransaction(transactionID);
         return ResponseEntity.ok().body("The transaction was cancelled successfully");
     }
-
 
 }

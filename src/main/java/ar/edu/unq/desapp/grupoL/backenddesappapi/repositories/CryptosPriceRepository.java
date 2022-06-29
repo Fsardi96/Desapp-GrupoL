@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptosPrice;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public interface CryptosPriceRepository extends CrudRepository<CryptosPrice,Long
     Boolean anyRecord();
 
 
-    @Query(value = "SELECT * FROM CRYPTOS_PRICE c WHERE c.id =(SELECT MAX(id) FROM CRYPTOS_PRICE)", nativeQuery = true)
-        CryptosPrice getPriceOf(String cryptoSymbol);
+    @Query(value = "SELECT f FROM CRYPTOS_PRICE c WHERE c.id =(SELECT MAX(id) FROM CRYPTOS_PRICE)", nativeQuery = true)
+        String getPriceOf(@Param("cryptoSymbol") String cryptoSymbol);
 }
 
 

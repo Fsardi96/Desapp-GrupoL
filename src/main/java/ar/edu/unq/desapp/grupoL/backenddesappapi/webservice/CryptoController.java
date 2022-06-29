@@ -1,8 +1,10 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupoL.backenddesappapi.aspects.LogExecutionTime;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyEnum;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.CryptoCurrencyList;
+import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.BaseCryptoDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos.CryptoDTO;
 import ar.edu.unq.desapp.grupoL.backenddesappapi.service.CryptoService;
 import io.swagger.annotations.Api;
@@ -25,12 +27,12 @@ import java.time.LocalDateTime;
 @Api (tags = "CryptoCurrency services")
 @Tag(name = "CryptoCurrency services", description = "Manage cryptocurrencies")
 @RestController
-@Transactional
 @RequestMapping("/api/crypto")
 public class CryptoController {
     @Autowired
     CryptoService cryptoService;
     private RestTemplate restTemplate = new RestTemplate();
+
 
     @Operation(summary = "Get a cryptocurrency price")
     @GetMapping("/getCrypoValue/{cryptoSymbol}")
@@ -40,12 +42,13 @@ public class CryptoController {
         return ResponseEntity.ok().body(new CryptoDTO(cryptoSymbol, price, LocalDateTime.now().toString()) );
     }
 
+
     @Operation(summary = "Get all cryptocurrency prices")
     @GetMapping("/getCrypoValue/all")
     public ResponseEntity<CryptoCurrencyList> getAllCryptoCurrencyPrices() {
         CryptoCurrencyList list = new CryptoCurrencyList();
         for (CryptoCurrencyEnum crypto : CryptoCurrencyEnum.values()) {
-            CryptoCurrency entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), CryptoCurrency.class);
+            BaseCryptoDTO entity = restTemplate.getForObject("https://api1.binance.com/api/v3/ticker/price?symbol=" + crypto.name(), BaseCryptoDTO.class);
             list.addCrypto(entity);
         }
         return ResponseEntity.ok().body(list);
