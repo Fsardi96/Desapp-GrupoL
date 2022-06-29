@@ -17,6 +17,7 @@ class UserTest {
         Assertions.assertEquals("pepegarcia123", user.getPassword());
         Assertions.assertEquals("0848843953963586953104", user.getCvu());
         Assertions.assertEquals("20532062", user.getWallet());
+        Assertions.assertEquals("Pepe Garcia",user.getFullName());
     }
 
     @Test

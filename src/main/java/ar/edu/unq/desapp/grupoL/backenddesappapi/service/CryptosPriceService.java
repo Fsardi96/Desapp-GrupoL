@@ -50,7 +50,6 @@ public class CryptosPriceService {
 
     }
 
-
     @Transactional
     public Float getCryptoPrice(String symbol) throws IOException {
         URL url = new URL("https://api1.binance.com/api/v3/ticker/price?symbol="+symbol);
@@ -59,16 +58,5 @@ public class CryptosPriceService {
         String response = getResponseBody(http);
         JSONObject json = new JSONObject(response);
         return json.getFloat("price");
-    }
-
-    @Transactional
-    public Boolean isThereAnyRecord() {
-        return cryptosPriceRepository.anyRecord() ;
-    }
-
-    @Transactional
-    public String fetchCryptoPriceByDB(String cryptoSymbol) {
-        System.out.println(cryptoSymbol);
-        return cryptosPriceRepository.getPriceOf(cryptoSymbol);
     }
 }

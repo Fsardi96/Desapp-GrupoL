@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-
 import ar.edu.unq.desapp.grupoL.backenddesappapi.model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

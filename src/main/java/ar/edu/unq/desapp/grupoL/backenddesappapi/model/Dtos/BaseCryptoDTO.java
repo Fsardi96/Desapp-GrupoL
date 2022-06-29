@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 public class BaseCryptoDTO {
     private String symbol;
     private Float price;
-
-
 
     public String getSymbol() {
         return symbol;

@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoL.backenddesappapi.model.Dtos;
 
-
 public class TransactionCreateDTO {
 
     private String cryptoSymbol;

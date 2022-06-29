@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -28,7 +27,6 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-
 
     public UserService() {
         //Empty constructor
@@ -112,11 +110,9 @@ public class UserService {
         return new UserTradedVolumeDTO(userFound.getFullName(), LocalDateTime.now().toString(), volumeInUSD, volumeInARS, cryptoActives);
     }
 
-
     public boolean isBetweenDates(LocalDateTime dateAndTime, LocalDateTime dateFrom, LocalDateTime dateTo) {
         return dateAndTime.isAfter(dateFrom) && dateAndTime.isBefore(dateTo);
     }
-
 
     public float volumeInUSD(ArrayList<Transaction> transactions) {
         float sum = 0;
@@ -125,7 +121,6 @@ public class UserService {
         }
         return sum;
     }
-
 
     public float volumeInARS(ArrayList<Transaction> transactions) {
         float sum = 0;
@@ -137,7 +132,6 @@ public class UserService {
 
 
     public ArrayList<CryptoActiveDTO> getCryptoActivesFromTransactions(ArrayList<Transaction> transactions) {
-       // ArrayList<CryptoCurrency> cryptoCurrencies = transactions.stream().map(t -> t.getCrypto()).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<CryptoActiveDTO> cryptoActiveDTOS = new ArrayList<>();
         for(int i = 0; i < transactions.size(); i++){
             Transaction transaction = transactions.get(i);
@@ -147,24 +141,4 @@ public class UserService {
         }
         return cryptoActiveDTOS;
     }
-/*
-    @Transactional
-    public TokenDTO login(AuthUserDTO authUserDTO) {
-        Optional<User> user = userRepository.findUserByName(authUserDTO.getName());
-        if(!user.isPresent())
-            throw new UserNotFound();
-        if(passwordEncoder.matches(authUserDTO.getPassword(), user.get().getPassword()))
-            return new TokenDTO(jwtProvider.createToken(user.get()));
-        return null;
-    }
-
-    @Transactional
-    public TokenDTO validate(String token) {
-        if(!jwtProvider.validate(token))
-            return null;
-        String username = jwtProvider.getUserNameFromToken(token);
-        if(!userRepository.findUserByName(username).isPresent())
-            return null;
-        return new TokenDTO(token);
-    }*/
 }
