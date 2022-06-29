@@ -22,7 +22,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule servicesShouldOnlyBeAccessedByControllersAndAspects = classes()
             .that().resideInAPackage ("..service..")
-            .should().onlyBeAccessed().byAnyPackage("..webservice..", "..service..");
+            .should().onlyBeAccessed().byAnyPackage("..webservice..", "..service..","..security..");
 
 
 

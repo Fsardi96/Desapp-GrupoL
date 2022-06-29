@@ -40,12 +40,13 @@ dependencies {
 	/*// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'*/
 
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
-
 	// https://mvnrepository.com/artifact/org.springframework/spring-aspects
 	implementation group: 'org.springframework', name: 'spring-aspects', version: '3.2.4.RELEASE'
 
 	implementation 'com.tngtech.archunit:archunit-junit5:0.23.1'
+
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+
 
 }
 
