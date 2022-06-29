@@ -40,9 +40,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authManager;
 
-
     static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
-
 
     @PostMapping("/auth/login")
     public Map<String, Object> loginHandler(@RequestBody AuthUserDTO body) {
@@ -63,7 +61,6 @@ public class UserController {
         return userService.getUsers();
     }
 
-
     @Operation(summary = "Get user")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserByID(@Parameter(description = "The user ID that needs to be fetched", required = true)
@@ -72,7 +69,6 @@ public class UserController {
         return ResponseEntity.ok().body(userFound);
     }
 
-
     @Operation(summary = "Register user")
     @PostMapping(path="/registerUser" , consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createUser(@Parameter(description = "The user to be registered", required = true)
@@ -80,7 +76,6 @@ public class UserController {
 
         return ResponseEntity.ok().body(this.userService.createUser(user));
     }
-
 
     @Operation(summary = "Delete user")
     @DeleteMapping("/deleteUser/{id}")
@@ -94,8 +89,6 @@ public class UserController {
         }
         return("The user was successfully deleted");
     }
-
-
 
     @Operation(summary = "Get user transaction between dates")
     @GetMapping("/tradedVolume/userID={id}")
