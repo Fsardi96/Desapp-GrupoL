@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/registerUser").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/swagger-ui").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .userDetailsService(uds)

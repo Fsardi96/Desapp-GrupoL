@@ -38,7 +38,7 @@ public class CryptosPriceService {
         return  cryptosPriceRepository.findById(id);
     }
 
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/3 * * * *")
     @Transactional
     public CryptosPrice createCryptosPrice() throws IOException {
         log.info("**************** Getting Crypto Prices ****************");
